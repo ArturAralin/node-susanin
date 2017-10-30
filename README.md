@@ -5,7 +5,7 @@ Just look at example.
 
 # Example
 Library configuration
-```
+```javascript
 const express = require('express');
 const { createRouter } = require('../index');
 const path = require('path');
@@ -39,7 +39,7 @@ app.listen(8080);
 ```
 
 Describing route
-```
+```javascript
 const {
   methods: { GET },
 } = require('../../index');
