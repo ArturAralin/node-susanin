@@ -1,10 +1,9 @@
 # express-object-router
-
-### Description
 This library facilitate describing endpoints for REST API servers. The main feature of this library is determining method, path, controller, middlewares, and validation of query object, url object and body object with one object.
 
 Just look at example.
 
+# Example
 Library configuration
 ```
 const express = require('express');
@@ -70,3 +69,6 @@ module.exports = [
 ];
 ```
 
+MIT License
+
+Copyright (c) 2017 Artur
