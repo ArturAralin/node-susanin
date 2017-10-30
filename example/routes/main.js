@@ -2,7 +2,7 @@ const {
   methods: { GET },
 } = require('../../index');
 
-const testCtrl = ({ reply, error }) => {
+const testCtrl = ({ reply }) => {
   reply({
     ok: 1,
   });
@@ -10,7 +10,7 @@ const testCtrl = ({ reply, error }) => {
 
 const testMiddleware = (req, res, next) => {
   next();
-}; 
+};
 
 module.exports = [
   {
