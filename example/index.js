@@ -9,6 +9,7 @@ const customMiddleware = (req, res, next) => {
 const app = express();
 
 const router = createRouter({
+  routePrefix: '',
   routesPath: path.resolve(__dirname, './routes'),
   middlewaresSequence: ({
     PARAMS_VALIDATION,
