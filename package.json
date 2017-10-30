@@ -1,8 +1,7 @@
 {
   "name": "express-object-router",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "version": "0.0.1",
+  "description": "This library facilitate describing endpoints for REST API servers. The main feature of this library is determining method, path, controller, middlewares, and validation of query object, url object and body object with one object.",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -10,9 +9,16 @@
     "type": "git",
     "url": "git+https://github.com/ArturAralin/express-object-router.git"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "keywords": [
+    "express",
+    "router",
+    "promise",
+    "rest",
+    "api",
+    "restful"
+  ],
+  "author": "Artur A.",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/ArturAralin/express-object-router/issues"
   },
@@ -23,10 +29,15 @@
     "eslint-plugin-import": "^2.8.0"
   },
   "dependencies": {
-    "express": "^4.16.2",
     "express-promise-router": "^2.0.0",
     "joi": "^13.0.1",
     "ramda": "^0.25.0",
     "require-tree": "^1.1.1"
+  },
+  "engines": {
+    "node": ">= 6.11.5"
+  },
+  "peerDependencies": {
+    "express": "4.x"
   }
 }
