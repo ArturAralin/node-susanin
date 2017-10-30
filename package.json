@@ -1,0 +1,32 @@
+{
+  "name": "express-object-router",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ArturAralin/express-object-router.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ArturAralin/express-object-router/issues"
+  },
+  "homepage": "https://github.com/ArturAralin/express-object-router#readme",
+  "devDependencies": {
+    "eslint": "^4.10.0",
+    "eslint-config-airbnb-base": "^12.1.0",
+    "eslint-plugin-import": "^2.8.0"
+  },
+  "dependencies": {
+    "express": "^4.16.2",
+    "express-promise-router": "^2.0.0",
+    "joi": "^13.0.1",
+    "ramda": "^0.25.0",
+    "require-tree": "^1.1.1"
+  }
+}
