@@ -1,5 +1,5 @@
 # express-object-router
-This library facilitate describing endpoints for REST API servers. The main feature of this library is determining method, path, controller, middlewares, and validation of query object, url object and body object with one object.
+Hapi.js like routing. This library facilitate describing endpoints for REST API servers. The main feature of this library is determining method, path, controller, middlewares, and validation of query object, url object and body object with one object.
 
 Just look at example.
 
