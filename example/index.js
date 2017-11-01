@@ -3,6 +3,12 @@ const { createRouter } = require('../index');
 const path = require('path');
 
 const customMiddleware = (req, res, next) => {
+  req.user = {
+    id: 10,
+    name: 'John',
+    age: 20,
+  };
+
   next();
 };
 
@@ -10,6 +16,7 @@ const app = express();
 
 const router = createRouter({
   routePrefix: '',
+  extraControllerParams: ['user'],
   routesPath: path.resolve(__dirname, './routes'),
   middlewaresSequence: ({
     PARAMS_VALIDATION,
