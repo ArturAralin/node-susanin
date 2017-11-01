@@ -1,0 +1,48 @@
+{
+  "name": "express-object-router",
+  "version": "0.0.2",
+  "description": "This library facilitate describing endpoints for REST API servers. The main feature of this library is determining method, path, controller, middlewares, and validation of query object, url object and body object with one object.",
+  "scripts": {
+    "test": "mocha test/*.test.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ArturAralin/express-object-router.git"
+  },
+  "keywords": [
+    "express",
+    "router",
+    "promise",
+    "rest",
+    "api",
+    "restful"
+  ],
+  "author": "Artur A.",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ArturAralin/express-object-router/issues"
+  },
+  "homepage": "https://github.com/ArturAralin/express-object-router#readme",
+  "devDependencies": {
+    "chai": "^4.1.2",
+    "chai-as-promised": "^7.1.1",
+    "eslint": "^4.10.0",
+    "eslint-config-airbnb-base": "^12.1.0",
+    "eslint-plugin-import": "^2.8.0",
+    "mocha": "^4.0.1",
+    "supertest": "^3.0.0",
+    "express": "4.x"
+  },
+  "dependencies": {
+    "express-promise-router": "^2.0.0",
+    "joi": "^13.0.1",
+    "ramda": "^0.25.0",
+    "require-tree": "^1.1.1"
+  },
+  "engines": {
+    "node": ">= 6.11.5"
+  },
+  "peerDependencies": {
+    "express": "4.x"
+  }
+}
