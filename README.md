@@ -71,4 +71,4 @@ module.exports = [
 
 MIT License
 
-Copyright (c) 2017 Artur
+Copyright (c) 2017 Artur A.
