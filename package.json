@@ -1,6 +1,6 @@
 {
   "name": "express-object-router",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "This library facilitate describing endpoints for REST API servers. The main feature of this library is determining method, path, controller, middlewares, and validation of query object, url object and body object with one object.",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
