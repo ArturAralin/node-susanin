@@ -3,8 +3,12 @@ declare module 'express-object-router' {
     Router,
     Request,
     Response,
-    NextFunction
+    NextFunction,
   } from 'express';
+
+  import {
+    AnySchema,
+  } from 'joi';
 
   interface Methods {
     GET: symbol;
@@ -34,6 +38,29 @@ declare module 'express-object-router' {
     middlewaresSequence: MiddlewaresSequence;
     onValidationError: (error: Error) => any;
     onReply: (data: any) => any;
+  }
+
+  interface ControllerParams {
+    reply(data: any): void;
+    error: NextFunction;
+    headers: { [key: string]: string };
+    params: { [key: string]: string };
+    body: { [key: string]: string };
+    query: { [key: string]: string };
+    [key: string]: any;
+  }
+
+  interface RouteValidation {
+    query?: AnySchema;
+    params?: AnySchema;
+    body?: AnySchema;
+  }
+  export interface Route {
+    method: symbol;
+    path: string;
+    controller: (params: ControllerParams) => void | Promise;
+    middlewares?: Middleware[];
+    validation: RouteValidation;
   }
 
   export function createRoute (config: Configuration): Router;
