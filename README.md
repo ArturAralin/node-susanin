@@ -4,9 +4,8 @@ Hapi.js like router. This library facilitate describing endpoints for REST API s
 # Getting Started
 Follow to install module
 
-`npm install express-object-router --save`
-
-Look example.
+* `npm install express-object-router --save`
+* Look example.
 
 # Example
 ### Library configuration
@@ -28,7 +27,7 @@ const customMiddleware = (req, res, next) => {
 const app = express();
 
 const router = createRouter({
-  routePrefix: '',
+  routePrefix: 'v1',
   extraControllerParams: ['user'],
   routesPath: path.resolve(__dirname, './routes'),
   middlewaresSequence: ({
@@ -43,7 +42,7 @@ const router = createRouter({
     customMiddleware,
     ROUTER_MIDDLEWARES,
   ],
-  onValidationError: error => error,
+  onValidationError: error => customErrorWrapper(error),
   onReply: data => ({ data }),
 });
 
