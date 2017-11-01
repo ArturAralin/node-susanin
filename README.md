@@ -9,20 +9,27 @@ Follow to install module
 Look example.
 
 # Example
-Library configuration
+### Library configuration
 ```javascript
 const express = require('express');
 const { createRouter } = require('../index');
 const path = require('path');
 
 const customMiddleware = (req, res, next) => {
+  req.user = {
+    id: 10,
+    name: 'John',
+    age: 20,
+  };
+
   next();
 };
 
 const app = express();
 
 const router = createRouter({
-  routePrefix: 'v1',
+  routePrefix: '',
+  extraControllerParams: ['user'],
   routesPath: path.resolve(__dirname, './routes'),
   middlewaresSequence: ({
     PARAMS_VALIDATION,
@@ -44,32 +51,58 @@ app.use(router);
 app.listen(8080);
 ```
 
-Describing route
+### Describing routes
 ```javascript
 const {
-  methods: { GET },
+  methods: { GET, POST },
 } = require('../../index');
+const joi = require('joi');
 
-const testCtrl = ({ reply, error }) => {
+const testCtrl = ({
+  reply,
+  error,
+  headers,
+  params,
+  body,
+  query,
+  user,
+}) => {
   reply({
+    user,
     ok: 1,
   });
 };
 
 const testMiddleware = (req, res, next) => {
   next();
-}; 
+};
 
 module.exports = [
   {
     method: GET,
-    path: '/home',
+    path: '/user/:id',
     controller: testCtrl,
     middlewares: [testMiddleware],
     validation: {
-      query: {},
-      params: {},
-      body: {},
+      query: {
+        limit: joi.number(),
+        offset: joi.number(),
+      },
+      params: {
+        id: joi.number(),
+      },
+    },
+  },
+  {
+    method: POST,
+    path: '/user',
+    controller: testCtrl,
+    middlewares: [testMiddleware],
+    validation: {
+      body: {
+        name: joi.string(),
+        age: joi.number(),
+      },
     },
   },
 ];
