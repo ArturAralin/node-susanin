@@ -12,7 +12,7 @@ Look example.
 ### Library configuration
 ```javascript
 const express = require('express');
-const { createRouter } = require('../index');
+const { createRouter } = require('express-object-router');
 const path = require('path');
 
 const customMiddleware = (req, res, next) => {
@@ -55,7 +55,7 @@ app.listen(8080);
 ```javascript
 const {
   methods: { GET, POST },
-} = require('../../index');
+} = require('express-object-router');
 const joi = require('joi');
 
 const testCtrl = ({
