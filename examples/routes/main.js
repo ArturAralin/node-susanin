@@ -2,13 +2,20 @@ const {
   methods: { GET, POST },
 } = require('../../index');
 const joi = require('joi');
-
+/* Test  */
 const testCtrl = ({ reply, user }) => {
   reply({
     user,
     ok: 1,
   });
 };
+
+const ctrlWithError = () =>
+  Promise
+    .resolve()
+    .then(() => {
+      JSON.parse('invalid');
+    });
 
 const testMiddleware = (req, res, next) => {
   next();
@@ -41,5 +48,12 @@ module.exports = [
         age: joi.number(),
       },
     },
+  },
+  {
+    method: GET,
+    path: '/with_catching_error',
+    controller: ctrlWithError,
+    middlewares: [],
+    validation: {},
   },
 ];
