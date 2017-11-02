@@ -1,5 +1,5 @@
 const express = require('express');
-const { createRouter } = require('../index');
+const { createRouter } = require('express-object-router');
 const path = require('path');
 
 const customMiddleware = (req, res, next) => {
@@ -15,7 +15,7 @@ const customMiddleware = (req, res, next) => {
 const app = express();
 
 const router = createRouter({
-  routePrefix: '',
+  routePrefix: 'v1',
   extraControllerProps: ['user'],
   routesPath: path.resolve(__dirname, './routes'),
   middlewaresSequence: ({
@@ -35,4 +35,6 @@ const router = createRouter({
 });
 
 app.use(router);
-app.listen(8080);
+app.listen(8080, () => {
+  console.log('Started on 8080');
+});

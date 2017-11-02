@@ -1,6 +1,6 @@
 const {
   methods: { GET, POST },
-} = require('../../index');
+} = require('express-object-router');
 const joi = require('joi');
 /* Test  */
 const testCtrl = ({ reply, user }) => {
