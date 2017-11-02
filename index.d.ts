@@ -7,7 +7,7 @@ declare module 'express-object-router' {
   } from 'express';
 
   import {
-    AnySchema,
+    Schema,
   } from 'joi';
 
   interface Methods {
@@ -52,14 +52,14 @@ declare module 'express-object-router' {
   }
 
   interface RouteValidation {
-    query?: AnySchema;
-    params?: AnySchema;
-    body?: AnySchema;
+    query?: Schema;
+    params?: Schema;
+    body?: Schema;
   }
   export interface Route {
     method: symbol;
     path: string;
-    controller: (params: ControllerParams) => void | Promise;
+    controller: (params: ControllerParams) => void | Promise<any>;
     middlewares?: Middleware[];
     validation: RouteValidation;
   }
