@@ -1,6 +1,8 @@
 # express-object-router
 Hapi.js like router. This library facilitate describing endpoints for REST API servers. The main feature of this library is determining method, path, controller, middlewares, and validation of query object, url object and body object with one object.
 
+# WARNING! 
+___Don't use this library for real projects while version of this library is not stable (i.e. < 1.0.0)___
 # Getting Started
 Follow to install module
 
@@ -49,6 +51,8 @@ const router = createRouter({
 app.use(router);
 app.listen(8080);
 ```
+
+See more examples [here](example)
 
 ### Describing routes
 ```javascript
