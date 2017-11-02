@@ -16,7 +16,7 @@ const app = express();
 
 const router = createRouter({
   routePrefix: '',
-  extraControllerParams: ['user'],
+  extraControllerProps: ['user'],
   routesPath: path.resolve(__dirname, './routes'),
   middlewaresSequence: ({
     PARAMS_VALIDATION,

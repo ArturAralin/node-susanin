@@ -33,11 +33,12 @@ declare module 'express-object-router' {
   type MiddlewaresSequence = (args: MiddlewaresSequenceArgs) => (symbol | Middleware)[];
 
   interface Configuration {
-    routePrefix: string | null;
     routesPath: string;
-    middlewaresSequence: MiddlewaresSequence;
-    onValidationError: (error: Error) => any;
-    onReply: (data: any) => any;
+    routePrefix?: string | null;
+    extraControllerProps?: string[]; 
+    middlewaresSequence?: MiddlewaresSequence;
+    onValidationError?: (error: Error) => any;
+    onReply?: (data: any) => any;
   }
 
   interface ControllerParams {
