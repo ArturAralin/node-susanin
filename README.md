@@ -59,9 +59,7 @@ See more examples [here](example)
 
 ### Describing routes
 ```javascript
-const {
-  methods: { GET, POST },
-} = require('express-object-router');
+const { GET, POST } = require('express-object-router/methods');
 const joi = require('joi');
 
 const testCtrl = ({
