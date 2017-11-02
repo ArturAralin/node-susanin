@@ -1,6 +1,4 @@
-const {
-  methods: { GET, POST },
-} = require('../../../index');
+const { GET, POST } = require('../../../methods');
 const joi = require('joi');
 /* Test  */
 const testCtrl = ({ reply, user }) => {
