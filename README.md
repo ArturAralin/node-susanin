@@ -3,6 +3,9 @@ Hapi.js like router. This library facilitate describing endpoints for REST API s
 
 # WARNING! 
 ___Don't use this library for real projects while version of this library is not stable (i.e. < 1.0.0)___
+
+If you have any ideas or question just leave issue [here](https://github.com/ArturAralin/express-object-router/issues/new)
+
 # Getting Started
 Follow to install module
 
