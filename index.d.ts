@@ -10,6 +10,10 @@ declare module 'express-object-router' {
     Schema,
   } from 'joi';
 
+  interface AnyProps {
+    [key: string]: any;
+  }
+
   interface Methods {
     GET: symbol;
     PUT: symbol;
@@ -29,7 +33,24 @@ declare module 'express-object-router' {
     ROUTER_MIDDLEWARES: symbol,
   }
 
-  type Middleware = (req: Request, res: Response, next: NextFunction) => any;
+  type ErrorFn = (error: any) => void;
+  type PassFn = () => void;
+  type SetToReqFn = (key: string, value: any) => void;
+
+  interface ModernMiddlewareProps {
+    req: Request;
+    res: Response;
+    next: NextFunction;
+    headers: AnyProps;
+    error: ErrorFn;
+    pass: PassFn;
+    setToReq: SetToReqFn;
+    props: AnyProps;
+  }
+
+  type ModernMiddlewareFn = (params: ModernMiddlewareProps) => any;
+  type ExpressMiddleware = (req: Request, res: Response, next: NextFunction) => any;
+  type Middleware = ModernMiddlewareFn | ExpressMiddleware;
   type MiddlewaresSequence = (args: MiddlewaresSequenceArgs) => (symbol | Middleware)[];
 
   interface Configuration {
@@ -42,12 +63,15 @@ declare module 'express-object-router' {
   }
 
   interface ControllerParams {
+    req: Request;
+    res: Response;
+    next: NextFunction;
     reply(data: any): void;
-    error: NextFunction;
-    headers: { [key: string]: string };
-    params: { [key: string]: string };
-    body: { [key: string]: string };
-    query: { [key: string]: string };
+    error: ErrorFn;
+    headers: AnyProps;
+    params: AnyProps;
+    body: AnyProps;
+    query: AnyProps;
     [key: string]: any;
   }
 
