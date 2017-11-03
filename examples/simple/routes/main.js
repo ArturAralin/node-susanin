@@ -25,6 +25,7 @@ module.exports = [
     path: '/user/:id',
     controller: testCtrl,
     middlewares: [testMiddleware],
+    middlewaresParams: {},
     validation: {
       query: {
         limit: joi.number(),
