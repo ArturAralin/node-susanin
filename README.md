@@ -112,11 +112,7 @@ module.exports = [
 ];
 ```
 
-# Notes
-
-#### error function note
-If you call error function without arguments, then it return symbol.
-
+---
 MIT License
 
 Copyright (c) 2017 Artur A.
