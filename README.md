@@ -1,5 +1,5 @@
 # express-object-router
-This library facilitate describing endpoints for REST API servers. The main feature of this library is determining method, path, controller, middlewares, and validation of query object, url object and body object with one object.
+This library facilitate describing endpoints for REST API servers. The main feature of this library is secure.
 
 # WARNING! 
 ___Don't use this library for real projects while version of this library is not stable (i.e. < 1.0.0)___
@@ -17,7 +17,6 @@ More examples [here](examples)
 ### Library configuration
 ```javascript
 /* app.js */
-
 const express = require('express');
 const { createRouter } = require('express-object-router');
 const path = require('path');
@@ -35,10 +34,10 @@ const customMiddleware = (req, res, next) => {
 const app = express();
 
 const router = createRouter({
-  routePrefix: 'v1',
-  extraControllerProps: ['user'],
-  routesPath: path.resolve(__dirname, './routes'),
-  middlewaresSequence: ({
+  routesPath: path.resolve(__dirname, './routes'), /* routes directory  */
+  routePrefix: 'v1', /* prefix before every route (i.e. /v1/route/path) */
+  extraControllerProps: ['user'], /* properties which will be added to controller from req object */
+  middlewaresSequence: ({ /* determining middlewares sequence for every route */
     PARAMS_VALIDATION,
     QUERY_VALIDATION,
     BODY_VALIDATION,
@@ -50,8 +49,8 @@ const router = createRouter({
     customMiddleware,
     ROUTER_MIDDLEWARES,
   ],
-  onValidationError: error => customErrorWrapper(error),
-  onReply: data => ({ data }),
+  onValidationError: joiError => customErrorWrapper(joiError), /* validation error handler */
+  onReply: data => ({ data }), /* reply object builder */
 });
 
 app.use(router);
@@ -61,18 +60,20 @@ app.listen(8080);
 ### Describing routes
 ```javascript
 /* routes/main.js */
-
 const { GET, POST } = require('express-object-router/methods');
 const joi = require('joi');
 
 const testCtrl = ({
-  reply,
-  error,
-  headers,
-  params,
-  body,
-  query,
-  user,
+  req, /* express req object */
+  res, /* express res object */
+  next, /* express next function */
+  reply, /* function for sending reply to client */
+  error, /* function calls error */
+  headers, /* headers object from req */
+  params, /* req.params */
+  body, /* req.body */
+  query, /* req.query */
+  user, /* property which determined in "extraControllerProps" */
 }) => {
   reply({
     user,
@@ -80,40 +81,41 @@ const testCtrl = ({
   });
 };
 
-const testMiddleware = (req, res, next) => {
-  next();
+const testMiddleware = ({
+  req, /* express req object */
+  res, /* express res object */
+  next, /* express next function */
+  headers, /* req.headers */
+  error, /* function calls error */
+  pass, /* function pass to next middleware */
+  props, /* values from "middlewaresProps" */
+  setToReq, /* function assign property to req object */
+}) => {
+  pass();
 };
-
 module.exports = [
   {
-    method: GET,
-    path: '/user/:id',
-    controller: testCtrl,
-    middlewares: [testMiddleware],
-    validation: {
+    method: GET, /* http method */
+    path: '/article', /* route path */
+    controller: testCtrl, /* controller function */
+    middlewares: [testMiddleware], /* middlewares for this route */
+    middlewaresProps: {}, /* props for middleware */
+    validation: { /* validation */
       query: {
         limit: joi.number(),
         offset: joi.number(),
       },
-      params: {
-        id: joi.number(),
-      },
-    },
-  },
-  {
-    method: POST,
-    path: '/user',
-    controller: testCtrl,
-    middlewares: [testMiddleware],
-    validation: {
-      body: {
-        name: joi.string(),
-        age: joi.number(),
-      },
+      body: {},
+      params: {},
     },
   },
 ];
 ```
+
+# Notes
+
+#### error function note
+If you call error function without arguments, then it return symbol.
 
 MIT License
 
