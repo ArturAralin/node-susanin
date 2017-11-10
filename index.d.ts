@@ -14,18 +14,6 @@ declare module 'express-object-router' {
     [key: string]: any;
   }
 
-  interface Methods {
-    GET: symbol;
-    PUT: symbol;
-    POST: symbol;
-    DELETE: symbol;
-    HEAD: symbol;
-    CONNECT: symbol;
-    OPTIONS: symbol;
-    TRACE: symbol;
-    PATCH: symbol;
-  }
-
   interface MiddlewaresSequenceArgs {
     PARAMS_VALIDATION: symbol,
     QUERY_VALIDATION: symbol,
@@ -89,5 +77,4 @@ declare module 'express-object-router' {
   }
 
   export function createRoute (config: Configuration): Router;
-  export const methods: Methods;
 }
