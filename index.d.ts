@@ -41,6 +41,15 @@ declare module 'express-object-router' {
   type Middleware = ModernMiddlewareFn | ExpressMiddleware;
   type MiddlewaresSequence = (args: MiddlewaresSequenceArgs) => (symbol | Middleware)[];
 
+  interface ObjectWithJoiValidation {
+    [key: string]: Schema;
+  }
+  interface RouteValidation {
+    query?: Schema | ObjectWithJoiValidation;
+    params?: Schema | ObjectWithJoiValidation;
+    body?: Schema | ObjectWithJoiValidation;
+  }
+
   interface Configuration {
     routesPath: string;
     routePrefix?: string | null;
@@ -48,6 +57,7 @@ declare module 'express-object-router' {
     middlewaresSequence?: MiddlewaresSequence;
     onValidationError?: (error: Error) => any;
     onReply?: (data: any) => any;
+    defaultValidation: RouteValidation;
   }
 
   interface ControllerParams {
@@ -63,11 +73,6 @@ declare module 'express-object-router' {
     [key: string]: any;
   }
 
-  interface RouteValidation {
-    query?: Schema;
-    params?: Schema;
-    body?: Schema;
-  }
   export interface Route {
     method: symbol;
     path: string;
