@@ -1,6 +1,7 @@
 const express = require('express');
 const { createRouter } = require('../../index');
 const path = require('path');
+const joi = require('joi');
 
 const customMiddleware = (req, res, next) => {
   req.user = {
@@ -29,6 +30,13 @@ const router = createRouter({
     customMiddleware,
     ROUTER_MIDDLEWARES,
   ],
+  defaultValidation: {
+    query: {
+      accessToken: joi.string(),
+    },
+    body: {},
+    params: {},
+  },
   onValidationError: error => error,
   onReply: data => ({ data }),
 });
