@@ -1,8 +1,5 @@
 # express-object-router
-This library facilitate describing endpoints for REST API servers. The main feature of this library is secure.
-
-# WARNING! 
-___Don't use this library for real projects while version of this library is not stable (i.e. < 1.0.0)___
+This library facilitate describing endpoints for REST API servers. The main feature of this library is determining method, path, controller, middlewares, and validation of query object, url object and body object with one object.
 
 If you have any ideas or question just leave issue [here](https://github.com/ArturAralin/express-object-router/issues/new)
 
@@ -49,7 +46,13 @@ const router = createRouter({
     customMiddleware,
     ROUTER_MIDDLEWARES,
   ],
-  onValidationError: joiError => customErrorWrapper(joiError), /* validation error handler */
+  defaultValidation: { /* default routes validation */
+    query: {
+      accessToken: joi.string(),
+    },
+    body: {},
+    params: {},
+  },
   onReply: data => ({ data }), /* reply object builder */
 });
 
