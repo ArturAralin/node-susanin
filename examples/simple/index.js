@@ -43,5 +43,6 @@ const router = createRouter({
 
 app.use(router);
 app.listen(8080, () => {
+  // eslint-disable-next-line no-console
   console.log('Started on 8080');
 });

@@ -1,6 +1,5 @@
 const express = require('express');
 const { createRouter } = require('../../index');
-const path = require('path');
 
 const users = {
   token1: {
