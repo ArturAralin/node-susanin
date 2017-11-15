@@ -1,7 +1,6 @@
 const supertest = require('supertest');
 const express = require('express');
 const { createRouter } = require('../index');
-const path = require('path');
 const { prop } = require('ramda');
 const chai = require('chai');
 
@@ -20,7 +19,8 @@ const initServer = (config) => {
 describe('Test router', () => {
   describe('With default configuration', () => {
     const api = initServer({
-      routesPath: path.resolve(__dirname, './routes'),
+      routesPaths: ['./routes/*.js'],
+      pathsRelateTo: __dirname,
     });
 
     it('GET request', async () => {
@@ -36,7 +36,8 @@ describe('Test router', () => {
 
   describe('With custom response', () => {
     const api = initServer({
-      routesPath: path.resolve(__dirname, './routes'),
+      routesPaths: ['./routes/*.js'],
+      pathsRelateTo: __dirname,
       onReply: data => ({ customProp: data }),
     });
 
@@ -53,7 +54,8 @@ describe('Test router', () => {
 
   describe('With custom validation error', () => {
     const api = initServer({
-      routesPath: path.resolve(__dirname, './routes'),
+      routesPaths: ['./routes/*.js'],
+      pathsRelateTo: __dirname,
       onValidationError: () => 'Oops. Error',
     });
 
@@ -70,7 +72,8 @@ describe('Test router', () => {
 
   describe('With routes prefix', () => {
     const api = initServer({
-      routesPath: path.resolve(__dirname, './routes'),
+      routesPaths: ['./routes/*.js'],
+      pathsRelateTo: __dirname,
       routePrefix: 'v1',
     });
 
