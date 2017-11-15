@@ -3,7 +3,9 @@
   "version": "1.0.0",
   "description": "This library facilitate describing endpoints for REST API servers. The main feature of this library is determining method, path, controller, middlewares, and validation of query object, url object and body object with one object.",
   "scripts": {
-    "test": "mocha test/*.test.js"
+    "lint": "eslint lib/**/*.js test/**/*.js examples/**/*.js index.js methods.js symbols.js",
+    "unit-test": "mocha test/*.test.js",
+    "test": "npm run lint && npm run unit-test"
   },
   "repository": {
     "type": "git",
@@ -35,6 +37,7 @@
   },
   "dependencies": {
     "express-promise-router": "^2.0.0",
+    "glob": "^7.1.2",
     "joi": "^13.0.1",
     "ramda": "^0.25.0",
     "require-tree": "^1.1.1"
