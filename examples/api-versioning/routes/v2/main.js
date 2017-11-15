@@ -1,6 +1,4 @@
-const {
-  methods: { GET },
-} = require('../../../../index');
+const { GET } = require('../../../../methods');
 
 const testCtrl = ({ reply }) => {
   reply({

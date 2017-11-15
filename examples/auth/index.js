@@ -43,7 +43,8 @@ const app = express();
 
 const router = createRouter({
   extraControllerProps: ['user'],
-  routesPath: path.resolve(__dirname, './routes'),
+  routesPaths: ['./routes/*.js'],
+  pathsRelateTo: __dirname,
   middlewaresSequence: ({
     PARAMS_VALIDATION,
     QUERY_VALIDATION,
@@ -62,5 +63,6 @@ const router = createRouter({
 
 app.use(router);
 app.listen(8080, () => {
+  // eslint-disable-next-line no-console
   console.log('Started on 8080');
 });

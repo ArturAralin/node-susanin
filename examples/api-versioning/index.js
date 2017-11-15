@@ -12,10 +12,12 @@ const routerV1 = createRouter({
 const routerV2 = createRouter({
   routePrefix: 'v2',
   routesPath: path.resolve(__dirname, './routes/v2'),
+  pathsRelateTo: __dirname,
 });
 
 app.use('/api', routerV1);
 app.use('/api', routerV2);
 app.listen(8080, () => {
+  // eslint-disable-next-line no-console
   console.log('Started on 8080');
 });

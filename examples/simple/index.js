@@ -1,6 +1,5 @@
 const express = require('express');
 const { createRouter } = require('../../index');
-const path = require('path');
 const joi = require('joi');
 
 const customMiddleware = (req, res, next) => {
@@ -17,7 +16,8 @@ const app = express();
 
 const router = createRouter({
   extraControllerProps: ['user'],
-  routesPath: path.resolve(__dirname, './routes'),
+  routesPaths: ['./*.router.js'],
+  pathsRelateTo: __dirname,
   middlewaresSequence: ({
     PARAMS_VALIDATION,
     QUERY_VALIDATION,
