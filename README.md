@@ -31,7 +31,8 @@ const customMiddleware = (req, res, next) => {
 const app = express();
 
 const router = createRouter({
-  routesPath: path.resolve(__dirname, './routes'), /* routes directory  */
+  routesPath: ['./routes/*.js'], /* routes paths  */
+  pathsRelateTo: __dirname, /* set current work directory */
   routePrefix: 'v1', /* prefix before every route (i.e. /v1/route/path) */
   extraControllerProps: ['user'], /* properties which will be added to controller from req object */
   middlewaresSequence: ({ /* determining middlewares sequence for every route */
