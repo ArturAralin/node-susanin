@@ -51,13 +51,14 @@ declare module 'express-object-router' {
   }
 
   interface Configuration {
-    routesPath: string;
+    routesPaths: string[];
+    pathsRelateTo: string;
     routePrefix?: string | null;
     extraControllerProps?: string[]; 
     middlewaresSequence?: MiddlewaresSequence;
     onValidationError?: (error: Error) => any;
     onReply?: (data: any) => any;
-    defaultValidation: RouteValidation;
+    defaultValidation?: RouteValidation;
   }
 
   interface ControllerParams {
