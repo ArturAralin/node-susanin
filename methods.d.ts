@@ -11,7 +11,7 @@ declare module 'express-object-router/methods' {
     PATCH: symbol;
   }
 
-  declare const methods: Methods;
+  const methods: Methods;
   
   export default methods;
 }

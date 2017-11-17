@@ -3,7 +3,7 @@ declare module 'express-object-router/symbols' {
     UNKNOWN_ERROR: symbol;
   }
 
-  declare const symbols: Symbols;
+  const symbols: Symbols;
   
   export default symbols;
 }

@@ -82,5 +82,5 @@ declare module 'express-object-router' {
     validation: RouteValidation;
   }
 
-  export function createRoute (config: Configuration): Router;
+  export function createRouter (config: Configuration): Router;
 }
