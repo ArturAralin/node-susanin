@@ -94,6 +94,9 @@ const testMiddleware = ({
   pass, /* function pass to next middleware */
   props, /* values from "middlewaresProps" */
   setToReq, /* function assign property to req object */
+  params, /* req.params */
+  body, /* req.body */
+  query, /* req.query */
 }) => {
   pass();
 };
@@ -115,6 +118,13 @@ module.exports = [
   },
 ];
 ```
+
+# Changelog
+
+## [1.2.0] - 2017-12-20
+### Added
+- Update `package-json.lock`
+- Add `body`, `params` and `query` to middleware object of arguments
 
 ---
 MIT License
