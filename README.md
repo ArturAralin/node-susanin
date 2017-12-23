@@ -31,7 +31,7 @@ const customMiddleware = (req, res, next) => {
 const app = express();
 
 const router = createRouter({
-  routesPath: ['./routes/*.js'], /* routes paths  */
+  routesPaths: ['./routes/*.js'], /* routes paths  */
   pathsRelateTo: __dirname, /* set current work directory */
   routePrefix: 'v1', /* prefix before every route (i.e. /v1/route/path) */
   extraControllerProps: ['user'], /* properties which will be added to controller from req object */
@@ -123,7 +123,7 @@ module.exports = [
 
 ## [1.2.0] - 2017-12-20
 ### Added
-- Update `package-json.lock`
+- Update `package-lock.json`
 - Add `body`, `params` and `query` to middleware object of arguments
 
 ---
