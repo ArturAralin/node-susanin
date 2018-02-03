@@ -6,12 +6,12 @@ const app = express();
 
 const routerV1 = createRouter({
   routePrefix: 'v1',
-  routesPath: path.resolve(__dirname, './routes/v1'),
+  routesPaths: path.resolve(__dirname, './routes/v1'),
 });
 
 const routerV2 = createRouter({
   routePrefix: 'v2',
-  routesPath: path.resolve(__dirname, './routes/v2'),
+  routesPaths: path.resolve(__dirname, './routes/v2'),
   pathsRelateTo: __dirname,
 });
 
