@@ -10,6 +10,7 @@ const {
 } = require('../../../methods');
 const parseCommon = require('./types-parsers/common');
 const parseNumber = require('./types-parsers/number');
+const parseString = require('./types-parsers/string');
 
 const METHODS_NAMES = {
   [GET]: 'get',
@@ -26,6 +27,8 @@ const parseValidationItem = (validation) => {
   switch (validation._type) {
     case 'number':
       return parseNumber(validation);
+    case 'string':
+      return parseString(validation);
     default:
       return null;
   }
@@ -33,7 +36,7 @@ const parseValidationItem = (validation) => {
 
 const parseValidation = validationObject =>
   Object
-    .keys(validationObject)
+    .keys(validationObject || {})
     .map((name) => {
       const commonValidation = parseCommon(validationObject[name]);
       const typedValidation = parseValidationItem(validationObject[name]);
@@ -54,11 +57,13 @@ const parseRoute = ({
   path,
   validation: {
     query: parseValidation(query),
+    body: parseValidation(body),
+    params: parseValidation(params),
   },
 });
 
 module.exports = (router) => {
   const x = router.map(parseRoute);
 
-  console.log(x[0].validation.query[0]);
+  console.log(x[0].validation.query[1][1].rules);
 };

@@ -8,6 +8,15 @@ const parseMax = test => ({
   value: test.arg,
 });
 
+const parseInteger = () => ({
+  rule: 'integer',
+  isInteger: true,
+});
+
+const parsePositive = () => ({
+  rule: 'positive',
+  isPositive: true,
+});
 
 const testsParser = (test) => {
   switch (test.name) {
@@ -15,6 +24,10 @@ const testsParser = (test) => {
       return parseMin(test);
     case 'max':
       return parseMax(test);
+    case 'integer':
+      return parseInteger();
+    case 'positive':
+      return parsePositive();
     default:
       return null;
   }
