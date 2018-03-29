@@ -1,6 +1,6 @@
 const path = require('path');
 const glob = require('glob');
-const getModel = require('./routest-ast');
+const getModel = require('./routes-ast');
 
 const MASK = './*.router.js';
 const RELATE_TO = path.resolve(__dirname, '../../../examples/simple');

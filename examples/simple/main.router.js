@@ -47,6 +47,7 @@ module.exports = [
       params: {
         id: joi.number(),
       },
+      body: joi.array().items(joi.string()).unique(),
     },
   },
 ];
