@@ -1,10 +1,14 @@
 const { testsParser } = require('./tests-parser');
-const { itemsParser } = require('./items-parser');
+const commonParser = require('./common');
 
-module.exports = (validation) => {
+const arrayParser = (parsers, validation) => {
   const type = validation._type;
   const rules = validation._tests.map(testsParser);
-  const itemsRules = validation._inner.items.map(itemsParser);
+  const itemsRules = validation._inner.items
+    .map(item => ({
+      ...commonParser(item),
+      ...parsers[item._type](item),
+    }));
 
   return {
     type,
@@ -12,3 +16,5 @@ module.exports = (validation) => {
     itemsRules,
   };
 };
+
+module.exports = arrayParser;
