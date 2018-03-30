@@ -1,10 +1,10 @@
 const { testsParser } = require('./tests-parser');
-const commonParser = require('./common');
+const common = require('./common');
 
 module.exports = (validation) => {
   const type = validation._type;
   const rules = validation._tests.map(testsParser);
-  const commonRules = commonParser(validation);
+  const commonRules = common(common);
 
   return {
     ...commonRules,

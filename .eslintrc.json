@@ -3,5 +3,8 @@
     "env": {
         "node": true,
         "mocha": true
+    },
+    "rules": {
+        "no-underscore-dangle": ["info", { "allow": ["foo_", "_bar"] }]
     }
 }
