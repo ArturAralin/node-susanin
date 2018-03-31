@@ -1,14 +1,16 @@
 const { testsParser } = require('./tests-parser');
 const common = require('./common');
+const {
+  merge,
+} = require('ramda');
 
 module.exports = (validation) => {
   const type = validation._type;
   const rules = validation._tests.map(testsParser);
-  const commonRules = common(common);
+  const commonRules = common(validation);
 
-  return {
-    ...commonRules,
+  return merge(commonRules, {
     type,
     rules,
-  };
+  });
 };

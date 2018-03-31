@@ -10,6 +10,10 @@ const {
 } = require('../../../methods');
 const joi = require('joi');
 const parsers = require('./types-parsers');
+const {
+  merge,
+  mergeAll,
+} = require('ramda');
 
 const { common: commonParser } = parsers;
 
@@ -24,6 +28,13 @@ const METHODS_NAMES = {
   [PATCH]: 'patch',
 };
 
+const DEFAULT_INFO = {
+  name: null,
+  description: null,
+  version: null,
+  group: null,
+};
+
 const parseValidation = (validationObject) => {
   const {
     isJoi,
@@ -32,37 +43,40 @@ const parseValidation = (validationObject) => {
   const type = isJoi ? _type : 'object';
   const obj = isJoi ? validationObject : joi.object().keys(validationObject);
   const typedValidation = parsers[type](obj);
-  const commonValidation = commonParser(obj);
+  const commonValidation = commonParser(obj, !Boolean(isJoi));
 
   return {
     type,
-    validation: {
-      ...commonValidation,
-      ...typedValidation,
-    },
+    validation: merge(commonValidation, typedValidation),
   };
 };
 
 const parseRoute = ({
   method,
   path,
-  validation: {
+  validation = {},
+  info = {},
+}) => {
+  const {
+    query,
     body,
     params,
-    query,
-  },
-}) => ({
-  method: METHODS_NAMES[method],
-  path,
-  validation: {
-    query: query && parseValidation(query),
-    body: body && parseValidation(body),
-    params: params && parseValidation(params),
-  },
-});
+  } = validation;
 
-module.exports = (router) => {
-  const x = router.map(parseRoute);
-
-  console.log(x[0].validation.body.validation.itemsRules);
+  return mergeAll([
+    DEFAULT_INFO,
+    info,
+    {
+      method: METHODS_NAMES[method],
+      path,
+      validation: {
+        query: (query && parseValidation(query)) || null,
+        body: (body && parseValidation(body)) || null,
+        params: (params && parseValidation(params)) || null,
+      },
+    },
+  ]);
 };
+
+module.exports = router =>
+  router.map(parseRoute);

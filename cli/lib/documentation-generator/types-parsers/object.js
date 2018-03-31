@@ -1,5 +1,8 @@
 const { testsParser } = require('./tests-parser');
 const commonParser = require('./common');
+const {
+  merge,
+} = require('ramda');
 
 const objectParser = (parsers, validation) => {
   const type = validation._type;
@@ -7,10 +10,10 @@ const objectParser = (parsers, validation) => {
   const keysRules = validation._inner.children && validation._inner.children
     .map(({ key, schema }) => [
       key,
-      {
-        ...commonParser(schema),
-        ...parsers[schema._type](schema),
-      },
+      merge(
+        commonParser(schema),
+        parsers[schema._type](schema)
+      ),
     ]);
 
   return {

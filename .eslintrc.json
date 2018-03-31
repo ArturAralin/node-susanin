@@ -5,6 +5,6 @@
         "mocha": true
     },
     "rules": {
-        "no-underscore-dangle": ["info", { "allow": ["foo_", "_bar"] }]
+        "no-underscore-dangle": ["warn", { "allow": [] }]
     }
 }

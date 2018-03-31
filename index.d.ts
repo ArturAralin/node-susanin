@@ -74,12 +74,20 @@ declare module 'express-object-router' {
     [key: string]: any;
   }
 
+  interface RouteDescription {
+    name?: string;
+    description?: string;
+    version?: string;
+    group?: string;
+  }
+
   export interface Route {
     method: symbol;
     path: string;
     controller: (params: ControllerParams) => void | Promise<any>;
     middlewares?: Middleware[];
     validation: RouteValidation;
+    info?: RouteDescription;
   }
 
   export function createRouter (config: Configuration): Router;

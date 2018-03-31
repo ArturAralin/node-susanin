@@ -1,4 +1,8 @@
-const { map } = require('ramda');
+const {
+  map,
+  toPairs,
+  pipe,
+} = require('ramda');
 
 const parseInner = map((v) => {
   const values = v.values();
@@ -10,9 +14,14 @@ const parseInner = map((v) => {
   return null;
 });
 
+const convertToRules = pipe(
+  toPairs,
+  map(([name, value]) => ({ name, value })),
+);
+
 module.exports = (validation) => {
   const type = validation._type;
-  const rules = parseInner(validation._inner);
+  const rules = convertToRules(parseInner(validation._inner));
 
   return {
     type,

@@ -26,14 +26,17 @@
   },
   "homepage": "https://github.com/ArturAralin/express-object-router#readme",
   "devDependencies": {
+    "api-doc": "^4.0.0",
+    "apidoc": "^0.17.6",
     "chai": "^4.1.2",
     "chai-as-promised": "^7.1.1",
     "eslint": "^4.10.0",
     "eslint-config-airbnb-base": "^12.1.0",
     "eslint-plugin-import": "^2.8.0",
+    "express": "4.x",
     "mocha": "^4.0.1",
     "supertest": "^3.0.0",
-    "express": "4.x"
+    "commander": "^2.15.1"
   },
   "dependencies": {
     "express-promise-router": "^2.0.0",

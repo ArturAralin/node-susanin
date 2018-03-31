@@ -1,4 +1,4 @@
-module.exports = (validation) => {
+module.exports = (validation, skipValidation) => {
   // Description
   const description = validation._description || null;
   const defaultValue = validation._flags && validation._flags.default || null;
@@ -21,6 +21,9 @@ module.exports = (validation) => {
     ? validation._tags
     : null;
 
+  // Required
+  const required = validation._flags.presence === 'required';
+
   return {
     description,
     defaultValue,
@@ -28,5 +31,7 @@ module.exports = (validation) => {
     disallowedValues,
     tags,
     notes,
+    required,
+    skipValidation,
   };
 };
