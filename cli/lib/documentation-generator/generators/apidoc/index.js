@@ -12,10 +12,15 @@ const {
   concat,
   anyPass,
   isEmpty,
+  head,
+  prop,
+  ifElse,
+  always,
+  mergeAll,
 } = require('ramda');
 const types = require('./types');
 
-// const clearAndFlattenArrays = pipe(filter(Boolean), flatten);
+const clearAndFlattenArrays = pipe(filter(Boolean), flatten);
 const isNotNil = compose(not, isNil);
 const composePoints = when(
   anyPass([isNotNil, isEmpty]),
@@ -33,6 +38,19 @@ const composeDisallowedVaues = when(
     v => [v],
     concat(['Disallowed Values: ']),
     join(' '),
+  ),
+);
+
+const getArrayType = pipe(
+  prop('itemsRules'),
+  head,
+  ifElse(
+    isNil,
+    always('array'),
+    pipe(
+      prop('type'),
+      v => `${v}[]`,
+    ),
   ),
 );
 
@@ -76,24 +94,58 @@ const primitiveParam = (group, name, {
     rules,
   });
 
-  const param =  `@apiParam (${group}) ${typePart} ${namePart} ${multipleDescription(description, [
+  const x = `@apiParam (${group}) ${typePart} ${namePart} ${multipleDescription(description, [
     composeDisallowedVaues(disallowedValues),
   ])}`;
 
-  console.log(param);
+  console.log(x);
 
-  return param;
+  return x;
 };
 
 let objectParams;
+let arrayParams;
 
 const apiParam = (group, name, { type, validation }) => {
   switch (type) {
     case 'object':
       return objectParams(group, name, validation);
+    case 'array':
+      return arrayParams(group, name, validation);
     default:
       return primitiveParam(group, name, validation);
   }
+};
+
+arrayParams = (group, parentName, validation) => {
+  const {
+    itemsRules,
+    skipValidation,
+  } = validation;
+
+  const newValidation = mergeAll([
+    validation,
+    {
+      type: getArrayType(validation),
+    },
+  ]);
+
+  return clearAndFlattenArrays([
+    !skipValidation && primitiveParam(group, parentName, newValidation),
+    itemsRules
+      .map((itemValidation) => {
+        const { type } = itemValidation;
+
+        if (type === 'object') {
+          return apiParam(group, parentName, {
+            type,
+            validation: itemValidation,
+          });
+        }
+
+        return null;
+      }),
+  ]);
 };
 
 objectParams = (group, parentName, validation) => {
@@ -102,7 +154,7 @@ objectParams = (group, parentName, validation) => {
     skipValidation,
   } = validation;
 
-  return flatten([
+  return clearAndFlattenArrays([
     !skipValidation && primitiveParam(group, parentName, validation),
     keysRules
       .map(([name, keyValidation]) => {
@@ -116,7 +168,7 @@ objectParams = (group, parentName, validation) => {
           validation: keyValidation,
         });
       }),
-  ].filter(Boolean));
+  ]);
 };
 
 const defineBlock = `/**

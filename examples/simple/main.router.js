@@ -83,8 +83,13 @@ module.exports = [
         x: joi.object().keys({
           key1: joi.string(),
         }),
+        y: joi.array().items(joi.object().keys({
+          key1: joi.object().keys({
+            subKey1: joi.string(),
+          }),
+        })),
       },
-      params: joi.array().items(joi.number(), joi.string())
+      params: joi.array().items(),
     },
   },
 ];
