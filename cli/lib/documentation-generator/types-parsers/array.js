@@ -8,7 +8,7 @@ const arrayParser = (parsers, validation) => {
   const itemsRules = validation._inner.items
     .map(item => merge(
       commonParser(item),
-      parsers[item._type](item)
+      parsers[item._type](item),
     ));
 
   return {

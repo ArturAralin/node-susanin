@@ -43,7 +43,7 @@ const parseValidation = (validationObject) => {
   const type = isJoi ? _type : 'object';
   const obj = isJoi ? validationObject : joi.object().keys(validationObject);
   const typedValidation = parsers[type](obj);
-  const commonValidation = commonParser(obj, !Boolean(isJoi));
+  const commonValidation = commonParser(obj, !isJoi);
 
   return {
     type,

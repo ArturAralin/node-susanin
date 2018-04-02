@@ -78,13 +78,13 @@ module.exports = [
         .default(100500)
         .allow(10)
         .allow(20)
-        // .min(100)
         .max(200),
       query: {
         x: joi.object().keys({
           key1: joi.string(),
         }),
       },
+      params: joi.array().items(joi.number(), joi.string())
     },
   },
 ];

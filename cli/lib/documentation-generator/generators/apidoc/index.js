@@ -1,8 +1,42 @@
 const {
   flatten,
+  pipe,
+  filter,
+  map,
+  when,
+  compose,
+  isNil,
+  not,
+  join,
+  defaultTo,
+  concat,
+  anyPass,
+  isEmpty,
 } = require('ramda');
 const types = require('./types');
 
+// const clearAndFlattenArrays = pipe(filter(Boolean), flatten);
+const isNotNil = compose(not, isNil);
+const composePoints = when(
+  anyPass([isNotNil, isEmpty]),
+  pipe(
+    filter(isNotNil),
+    map(point => ` * - ${point}`),
+    concat(['']),
+    join('\n'),
+  ),
+);
+const composeDisallowedVaues = when(
+  isNotNil,
+  pipe(
+    join(', '),
+    v => [v],
+    concat(['Disallowed Values: ']),
+    join(' '),
+  ),
+);
+
+const descriptionMsg = defaultTo('No description');
 const block = parts => `
 /**
 ${
@@ -12,15 +46,20 @@ ${
 }
  */
 `;
+const multipleDescription = (description, points) =>
+  `${descriptionMsg(description)}${composePoints(points)}`;
+
 const api = (method, path, name) => `@api {${method.toUpperCase()}} ${path} ${name || path}`;
 const apiVersion = v => `@apiVersion ${v || '0.0.0'}`;
 const apiName = (name, path) => `@apiName ${name || path}`;
 const apiGroup = name => `@apiGroup ${name || 'NO GROUP'}`;
-const apiDescription = text => `@apiDescription ${text || 'No description'}`;
+const apiDescription = text => `@apiDescription ${descriptionMsg(text)}`;
+
 const primitiveParam = (group, name, {
   description,
   defaultValue,
   allowedValues,
+  disallowedValues,
   rules,
   type,
   required,
@@ -37,7 +76,13 @@ const primitiveParam = (group, name, {
     rules,
   });
 
-  return `@apiParam (${group}) ${typePart} ${namePart} ${description || 'No description'}`;
+  const param =  `@apiParam (${group}) ${typePart} ${namePart} ${multipleDescription(description, [
+    composeDisallowedVaues(disallowedValues),
+  ])}`;
+
+  console.log(param);
+
+  return param;
 };
 
 let objectParams;
@@ -73,7 +118,6 @@ objectParams = (group, parentName, validation) => {
       }),
   ].filter(Boolean));
 };
-//  `@apiParam (${group}) {String} field`;
 
 const defineBlock = `/**
 * @apiDefine getParams Query params
