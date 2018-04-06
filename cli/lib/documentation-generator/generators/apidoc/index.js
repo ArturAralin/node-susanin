@@ -17,8 +17,20 @@ const {
   ifElse,
   always,
   mergeAll,
+  invoker,
 } = require('ramda');
+const rl = require('readline-sync');
+const fs = require('fs');
+const {
+  resolve: pathResolve,
+} = require('path');
 const types = require('./types');
+const {
+  printText,
+} = require('../tools');
+
+const APIDOC_CONFIG_NAME = 'apidoc.json';
+const DOCUMENTATION_NAME = 'apidoc-documentation.txt';
 
 const clearAndFlattenArrays = pipe(filter(Boolean), flatten);
 const isNotNil = compose(not, isNil);
@@ -94,13 +106,9 @@ const primitiveParam = (group, name, {
     rules,
   });
 
-  const x = `@apiParam (${group}) ${typePart} ${namePart} ${multipleDescription(description, [
+  return `@apiParam (${group}) ${typePart} ${namePart} ${multipleDescription(description, [
     composeDisallowedVaues(disallowedValues),
   ])}`;
-
-  console.log(x);
-
-  return x;
 };
 
 let objectParams;
@@ -184,7 +192,42 @@ const defineBlock = `/**
 */
 `;
 
-module.exports = (ast) => {
+const buildJsonConfiguration = (name, description, version) =>
+  JSON.stringify({
+    name,
+    version,
+    description,
+  }, null, '  ');
+
+const readConfigFile = pipe(
+  fs.readFileSync,
+  invoker(0, 'toString'),
+  JSON.parse,
+);
+
+module.exports = (absoluteOutputPath, ast) => {
+  const absoluteConfigPath = pathResolve(absoluteOutputPath, APIDOC_CONFIG_NAME);
+  const isConfigExists = fs.existsSync(absoluteConfigPath);
+
+  printText('ApiDoc docs generator');
+
+
+  const {
+    name: currentProjectName,
+    description: currentProjectDescription,
+    version: currentProjectVersion,
+  } = (isConfigExists && readConfigFile(absoluteConfigPath)) || {};
+  const projectName = !isConfigExists
+    ? rl.question('Project name (default: null): ') || null
+    : currentProjectName;
+  const projectDescription = !isConfigExists
+    ? rl.question('Project description (default: null): ') || null
+    : currentProjectDescription;
+
+
+  const projectVersion = rl.question(`Project version (${isConfigExists ? `current: ${currentProjectVersion}` : 'default: 1.0.0'}): `) || currentProjectVersion || '1.0.0';
+  const configurationData = buildJsonConfiguration(projectName, projectDescription, projectVersion);
+
   const routes = ast
     .map(({
       name,
@@ -214,9 +257,12 @@ module.exports = (ast) => {
     })
     .join('');
 
-  return [
+  const docsText = [
     defineBlock,
     routes,
   ].join('');
-};
 
+
+  fs.writeFileSync(absoluteConfigPath, configurationData);
+  fs.writeFileSync(pathResolve(absoluteOutputPath, DOCUMENTATION_NAME), docsText);
+};

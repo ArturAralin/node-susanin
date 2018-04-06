@@ -3,11 +3,6 @@
 const cli = require('commander');
 const path = require('path');
 const glob = require('glob');
-const {
-  __,
-  call,
-  pipe,
-} = require('ramda');
 
 const options = {
   realpath: true,
@@ -19,5 +14,7 @@ glob
   .map(require)
   .forEach(fn => fn(cli));
 
-cli.version('0.0.1');
+cli.version('0.0.1-alpha');
 cli.parse(process.argv);
+
+if (!cli.args.length) cli.help();

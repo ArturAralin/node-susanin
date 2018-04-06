@@ -42,7 +42,8 @@
     "express-promise-router": "^2.0.0",
     "glob": "^7.1.2",
     "joi": "^13.0.1",
-    "ramda": "^0.25.0"
+    "ramda": "^0.25.0",
+    "readline-sync": "^1.4.9"
   },
   "engines": {
     "node": ">= 6.11.5"
@@ -50,5 +51,9 @@
   "peerDependencies": {
     "express": "^4.x",
     "joi": "^13.x"
+  },
+  "preferGlobal": true,
+  "bin": {
+    "eo-router": "./cli/index.js"
   }
 }
