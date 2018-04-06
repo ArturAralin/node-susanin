@@ -211,7 +211,6 @@ module.exports = (absoluteOutputPath, ast) => {
 
   printText('ApiDoc docs generator');
 
-
   const {
     name: currentProjectName,
     description: currentProjectDescription,
