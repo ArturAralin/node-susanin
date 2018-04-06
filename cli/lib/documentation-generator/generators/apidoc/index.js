@@ -217,10 +217,10 @@ module.exports = (absoluteOutputPath, ast) => {
     version: currentProjectVersion,
   } = (isConfigExists && readConfigFile(absoluteConfigPath)) || {};
   const projectName = !isConfigExists
-    ? rl.question('Project name (default: null): ') || null
+    ? rl.question('Project name (default: ""): ') || ''
     : currentProjectName;
   const projectDescription = !isConfigExists
-    ? rl.question('Project description (default: null): ') || null
+    ? rl.question('Project description (default: ""): ') || ''
     : currentProjectDescription;
 
 
