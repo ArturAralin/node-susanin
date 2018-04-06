@@ -35,15 +35,15 @@
     "eslint-plugin-import": "^2.8.0",
     "express": "4.x",
     "mocha": "^4.0.1",
-    "supertest": "^3.0.0",
-    "commander": "^2.15.1"
+    "supertest": "^3.0.0"
   },
   "dependencies": {
     "express-promise-router": "^2.0.0",
     "glob": "^7.1.2",
     "joi": "^13.0.1",
     "ramda": "^0.25.0",
-    "readline-sync": "^1.4.9"
+    "readline-sync": "^1.4.9",
+    "commander": "^2.15.1"
   },
   "engines": {
     "node": ">= 6.11.5"
