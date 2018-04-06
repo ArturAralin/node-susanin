@@ -124,7 +124,7 @@ module.exports = [
 ## [1.3.0] - 2018-04-06
 ### Added
 - Add `info` to the `Route` interface
-- Add cli command `oe-router build-docs` (al)
+- Add cli command `oe-router build-docs` (alpha)
 - Remove spread operator for node 6 compatibility
 ## [1.2.0] - 2017-12-20
 ### Added
