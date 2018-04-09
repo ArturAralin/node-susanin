@@ -121,6 +121,11 @@ module.exports = [
 
 # Changelog
 
+## [1.3.1] - 2018-04-09
+### Updated
+- interface of `build-docs` has been changed
+- fix `apidoc` text generation
+
 ## [1.3.0] - 2018-04-06
 ### Added
 - Add `info` to the `Route` interface
