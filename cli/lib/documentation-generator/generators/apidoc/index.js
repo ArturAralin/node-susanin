@@ -222,8 +222,6 @@ module.exports = (absoluteOutputPath, ast) => {
   const projectDescription = !isConfigExists
     ? rl.question('Project description (default: ""): ') || ''
     : currentProjectDescription;
-
-
   const projectVersion = rl.question(`Project version (${isConfigExists ? `current: ${currentProjectVersion}` : 'default: 1.0.0'}): `) || currentProjectVersion || '1.0.0';
   const configurationData = buildJsonConfiguration(projectName, projectDescription, projectVersion);
 
