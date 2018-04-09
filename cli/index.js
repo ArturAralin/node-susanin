@@ -14,7 +14,7 @@ glob
   .map(require)
   .forEach(fn => fn(cli));
 
-cli.version('0.0.1-alpha');
+cli.version('0.0.2-alpha');
 cli.parse(process.argv);
 
 if (!cli.args.length) cli.help();
