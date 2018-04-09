@@ -29,9 +29,9 @@ const sizes = (type, rules) => {
 
   return [
     '{',
-    min || (type === 'number' ? '-Infinite' : ''),
+    min || (type === 'number' ? '-Infinite' : '0'),
     type === 'string' ? '..' : '-',
-    max || (type === 'number' ? 'Infinite' : ''),
+    max || 'Infinite',
     '}',
   ].join('');
 };

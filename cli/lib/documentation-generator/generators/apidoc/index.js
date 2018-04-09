@@ -211,20 +211,17 @@ module.exports = (absoluteOutputPath, ast) => {
 
   printText('ApiDoc docs generator');
 
-
   const {
     name: currentProjectName,
     description: currentProjectDescription,
     version: currentProjectVersion,
   } = (isConfigExists && readConfigFile(absoluteConfigPath)) || {};
   const projectName = !isConfigExists
-    ? rl.question('Project name (default: null): ') || null
+    ? rl.question('Project name (default: ""): ') || ''
     : currentProjectName;
   const projectDescription = !isConfigExists
-    ? rl.question('Project description (default: null): ') || null
+    ? rl.question('Project description (default: ""): ') || ''
     : currentProjectDescription;
-
-
   const projectVersion = rl.question(`Project version (${isConfigExists ? `current: ${currentProjectVersion}` : 'default: 1.0.0'}): `) || currentProjectVersion || '1.0.0';
   const configurationData = buildJsonConfiguration(projectName, projectDescription, projectVersion);
 
