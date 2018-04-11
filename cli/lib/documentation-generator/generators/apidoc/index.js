@@ -18,6 +18,7 @@ const {
   always,
   mergeAll,
   invoker,
+  reject,
 } = require('ramda');
 const rl = require('readline-sync');
 const fs = require('fs');
@@ -32,8 +33,8 @@ const {
 const APIDOC_CONFIG_NAME = 'apidoc.json';
 const DOCUMENTATION_NAME = 'apidoc-documentation.txt';
 
-const clearAndFlattenArrays = pipe(filter(Boolean), flatten);
 const isNotNil = compose(not, isNil);
+const clearAndFlattenArrays = pipe(flatten, reject(isNil));
 const composePoints = when(
   anyPass([isNotNil, isEmpty]),
   pipe(
