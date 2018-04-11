@@ -14,8 +14,8 @@ const DEFAULT_OUTPUT_FOLDER = path.resolve(CWD, './documentation');
 
 const descriptionText = `Params specification:
 
-    <routes-mask> - Mask for routes files searching (example: path/to/**/*.router.js)
-    <docs-format> - Output documentation format
+  <docs-format> - Output documentation format
+  [routes...] - Route path. (example: /path/to/my.router.js)
 
   Supported docs format:
     apidoc - Simple inline docs for RESTful api
