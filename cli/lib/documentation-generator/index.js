@@ -2,7 +2,6 @@ const {
   concat,
 } = require('ramda');
 const path = require('path');
-const glob = require('glob');
 const getModel = require('./routes-ast');
 const docsGenerators = require('./generators');
 const {
@@ -23,32 +22,27 @@ const descriptionText = `Params specification:
 
 module.exports = (cli) => {
   cli
-    .command('build-docs <routes-mask> <docs-format>')
+    .command('build-docs <docs-format> [routes...]')
     .description(descriptionText)
     .option('-O, --outputPath <outputPath>', 'path to output docs files', DEFAULT_OUTPUT_FOLDER)
     .option('--verbose', 'verbose mode')
-    .action((routesMask, docsFormat, { outputPath, verbose }) => {
+    .action((docsFormat, routes, { outputPath, verbose }) => {
       const absoluteOutputPath = path.resolve(CWD, outputPath);
-      const options = {
-        realpath: true,
-        cwd: CWD,
-      };
+      const absoluteRoutesPaths = routes.map(relativePath => path.resolve(CWD, relativePath));
 
-      const foundedFiles = glob.sync(routesMask, options);
-
-      if (foundedFiles.length === 0) {
+      if (absoluteRoutesPaths.length === 0) {
         printText('No router files found');
 
         return;
       }
 
       if (verbose) {
-        printText(foundedFiles
+        printText(absoluteRoutesPaths
           .map(line => `(finded file) ${line}`)
           .join('\n'));
       }
 
-      const ast = foundedFiles
+      const ast = absoluteRoutesPaths
         .map(require)
         .map(getModel)
         .reduce(concat, []);
