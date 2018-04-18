@@ -120,7 +120,9 @@ module.exports = [
 ```
 
 # Changelog
-
+## [1.3.3] - 2018-04-18
+### Added
+- `errorP` fuction to controller params
 ## [1.3.1] - 2018-04-09
 ### Updated
 - interface of `build-docs` has been changed
