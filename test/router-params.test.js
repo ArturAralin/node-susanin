@@ -15,13 +15,46 @@ const initServer = (config) => {
 
   app.use(router);
 
-  return supertest(app);
+  return {
+    api: supertest(app),
+    app,
+  };
 };
 
 describe('express-object-router router params', () => {
-  const api = initServer({
+  const {
+    api,
+    app,
+  } = initServer({
     routesPaths: ['./routes/*.js'],
     pathsRelateTo: __dirname,
+  });
+
+  it('ctrl.params#reply', async () => {
+    const result = await api
+      .get('/ctrl/params/reply')
+      .then(getData);
+
+    return expect(result)
+      .have.property('ok')
+      .that.to.be.true;
+  });
+
+  it('ctrl.params#error', async () => {
+    let isCalled = false;
+
+    // eslint-disable-next-line no-unused-vars
+    app.use((err, req, res, next) => {
+      isCalled = true;
+
+      res.send('');
+    });
+
+    await api
+      .get('/ctrl/params/error')
+      .then(getData);
+
+    return expect(isCalled).to.be.true;
   });
 
   it('ctrl.params#errorP (param style)', async () => {

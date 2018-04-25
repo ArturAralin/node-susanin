@@ -1,6 +1,16 @@
-const { GET } = require('../../methods');
+const {
+  GET,
+} = require('../../methods');
 
-const paramStyle = async ({
+const replyCtrl = ({
+  reply,
+}) => {
+  reply({
+    ok: true,
+  });
+};
+
+const errorPParamStyleCtrl = async ({
   errorP,
   reply,
 }) => {
@@ -16,7 +26,7 @@ const paramStyle = async ({
   }
 };
 
-const fnStyle = async ({
+const errorPfnStyleCtrl = async ({
   errorP,
   reply,
 }) => {
@@ -32,17 +42,37 @@ const fnStyle = async ({
   }
 };
 
+const errorFnCtrl = ({
+  error,
+}) => {
+  error({
+    fail: true,
+  });
+};
+
 module.exports = [
   {
     method: GET,
-    path: '/ctrl/params/errorP-param-style',
-    controller: paramStyle,
+    path: '/ctrl/params/errorP-fn-style',
+    controller: errorPfnStyleCtrl,
     validation: {},
   },
   {
     method: GET,
-    path: '/ctrl/params/errorP-fn-style',
-    controller: fnStyle,
+    path: '/ctrl/params/errorP-param-style',
+    controller: errorPParamStyleCtrl,
+    validation: {},
+  },
+  {
+    method: GET,
+    path: '/ctrl/params/reply',
+    controller: replyCtrl,
+    validation: {},
+  },
+  {
+    method: GET,
+    path: '/ctrl/params/error',
+    controller: errorFnCtrl,
     validation: {},
   },
 ];
