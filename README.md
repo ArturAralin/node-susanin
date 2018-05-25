@@ -120,6 +120,10 @@ module.exports = [
 ```
 
 # Changelog
+## [1.3.4] - 2018-05-25
+### Updated
+- `errorP` now avaliable from package.
+- `reply` now supports promises as argument
 ## [1.3.3] - 2018-04-18
 ### Added
 - `errorP` fuction to controller params
