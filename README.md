@@ -1,12 +1,12 @@
-# express-object-router
+# node-susanin
 This library facilitate describing endpoints for REST API servers. The main feature of this library is determining method, path, controller, middlewares, and validation of query object, url object and body object with one object.
 
-If you have any ideas or question just leave issue [here](https://github.com/ArturAralin/express-object-router/issues/new)
+If you have any ideas or question just leave issue [here](https://github.com/ArturAralin/node-susanin/issues/new)
 
 # Getting Started
 Follow to install module
 
-* `npm install express-object-router --save`
+* `npm install node-susanin --save`
 * Look example.
 
 # Example
@@ -15,7 +15,7 @@ More examples [here](examples)
 ```javascript
 /* app.js */
 const express = require('express');
-const { createRouter } = require('express-object-router');
+const { createRouter } = require('node-susanin');
 const path = require('path');
 
 const customMiddleware = (req, res, next) => {
@@ -64,7 +64,7 @@ app.listen(8080);
 ### Describing routes
 ```javascript
 /* routes/main.js */
-const { GET, POST } = require('express-object-router/methods');
+const { GET, POST } = require('node-susanin/methods');
 const joi = require('joi');
 
 const testCtrl = ({
