@@ -10,6 +10,25 @@ const replyCtrl = ({
   });
 };
 
+const replyPromiseArgCtrl = ({
+  reply,
+}) => {
+  const promise = Promise.resolve({
+    ok: true,
+  });
+
+  reply(promise);
+};
+
+const replyPromiseArgRejectionCtrl = ({
+  reply,
+}) => {
+  // eslint-disable-next-line prefer-promise-reject-errors
+  const promise = Promise.reject({ ok: false });
+
+  reply(promise);
+};
+
 const errorPParamStyleCtrl = async ({
   errorP,
   reply,
@@ -67,6 +86,18 @@ module.exports = [
     method: GET,
     path: '/ctrl/params/reply',
     controller: replyCtrl,
+    validation: {},
+  },
+  {
+    method: GET,
+    path: '/ctrl/params/replyPromiseArg',
+    controller: replyPromiseArgCtrl,
+    validation: {},
+  },
+  {
+    method: GET,
+    path: '/ctrl/params/replyPromiseArgRejection',
+    controller: replyPromiseArgRejectionCtrl,
     validation: {},
   },
   {
