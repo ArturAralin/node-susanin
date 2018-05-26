@@ -38,7 +38,7 @@ const ctrl = async ({ reply }) => {
 
 `reply(data)` - Функция для отправки ответа клиету. [Подробнее](#reply-function)
 
-`errorP` - Функция для работы с асинхронными ошибками. [Подробнее](#errorP-function)
+`errorP` - Функция для работы с асинхронными ошибками. [Подробнее](#errorp-function)
 
 ### Пример
 ```javascript
