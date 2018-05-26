@@ -9,115 +9,8 @@ Follow to install module
 * `npm install node-susanin --save`
 * Look example.
 
-# Example
-More examples [here](examples)
-### Library configuration
-```javascript
-/* app.js */
-const express = require('express');
-const { createRouter } = require('node-susanin');
-const path = require('path');
-
-const customMiddleware = (req, res, next) => {
-  req.user = {
-    id: 10,
-    name: 'John',
-    age: 20,
-  };
-
-  next();
-};
-
-const app = express();
-
-const router = createRouter({
-  routesPaths: ['./routes/*.js'], /* routes paths  */
-  pathsRelateTo: __dirname, /* set current work directory */
-  routePrefix: 'v1', /* prefix before every route (i.e. /v1/route/path) */
-  extraControllerProps: ['user'], /* properties which will be added to controller from req object */
-  middlewaresSequence: ({ /* determining middlewares sequence for every route */
-    PARAMS_VALIDATION,
-    QUERY_VALIDATION,
-    BODY_VALIDATION,
-    ROUTER_MIDDLEWARES,
-  }) => [
-    PARAMS_VALIDATION,
-    QUERY_VALIDATION,
-    BODY_VALIDATION,
-    customMiddleware,
-    ROUTER_MIDDLEWARES,
-  ],
-  defaultValidation: { /* default routes validation */
-    query: {
-      accessToken: joi.string(),
-    },
-    body: {},
-    params: {},
-  },
-  onReply: data => ({ data }), /* reply object builder */
-});
-
-app.use(router);
-app.listen(8080);
-```
-
-### Describing routes
-```javascript
-/* routes/main.js */
-const { GET, POST } = require('node-susanin/methods');
-const joi = require('joi');
-
-const testCtrl = ({
-  req, /* express req object */
-  res, /* express res object */
-  next, /* express next function */
-  reply, /* function for sending reply to client */
-  error, /* function calls error */
-  headers, /* headers object from req */
-  params, /* req.params */
-  body, /* req.body */
-  query, /* req.query */
-  user, /* property which determined in "extraControllerProps" */
-}) => {
-  reply({
-    user,
-    ok: 1,
-  });
-};
-
-const testMiddleware = ({
-  req, /* express req object */
-  res, /* express res object */
-  next, /* express next function */
-  headers, /* req.headers */
-  error, /* function calls error */
-  pass, /* function pass to next middleware */
-  props, /* values from "middlewaresProps" */
-  setToReq, /* function assign property to req object */
-  params, /* req.params */
-  body, /* req.body */
-  query, /* req.query */
-}) => {
-  pass();
-};
-module.exports = [
-  {
-    method: GET, /* http method */
-    path: '/article', /* route path */
-    controller: testCtrl, /* controller function */
-    middlewares: [testMiddleware], /* middlewares for this route */
-    middlewaresProps: {}, /* props for middleware */
-    validation: { /* validation */
-      query: {
-        limit: joi.number(),
-        offset: joi.number(),
-      },
-      body: {},
-      params: {},
-    },
-  },
-];
-```
+# API References
+See [here](https://github.com/ArturAralin/node-susanin/blob/master/api-documentation/general.md)
 
 # Changelog
 ## [1.3.5] - 2018-05-25
@@ -145,4 +38,4 @@ module.exports = [
 ---
 MIT License
 
-Copyright (c) 2017 Artur A.
+Copyright (c) 2018 Artur A.
