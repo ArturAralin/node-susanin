@@ -13,6 +13,9 @@ Follow to install module
 See [here](https://github.com/ArturAralin/node-susanin/blob/master/api-documentation/general.md)
 
 # Changelog
+## [1.4.0] - 2018-05-30
+### Updated
+- New `onReply` behaviour. [More details](https://github.com/ArturAralin/node-susanin/blob/master/api-documentation/routerConfiguration.md#Формирование-ответа-пользователю)
 ## [1.3.5] - 2018-05-25
 ### Updated
 - `errorP` now avaliable from package.
