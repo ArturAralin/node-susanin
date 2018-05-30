@@ -18,7 +18,7 @@ const initServer = (config) => {
   return supertest(app);
 };
 
-describe('express-object-router tests', () => {
+describe('node-susanin tests', () => {
   describe('default configuration', () => {
     const api = initServer({
       routesPaths: ['./routes/*.js'],
@@ -40,7 +40,9 @@ describe('express-object-router tests', () => {
     const api = initServer({
       routesPaths: ['./routes/*.js'],
       pathsRelateTo: __dirname,
-      onReply: data => ({ customProp: data }),
+      onReply: (res, data) => {
+        res.status(200).json({ customProp: data });
+      },
     });
 
     it('GET request', async () => {

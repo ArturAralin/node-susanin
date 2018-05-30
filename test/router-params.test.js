@@ -21,7 +21,7 @@ const initServer = (config) => {
   };
 };
 
-describe('express-object-router router params', () => {
+describe('node-susanin router params', () => {
   const {
     api,
     app,

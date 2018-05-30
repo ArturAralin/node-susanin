@@ -1,4 +1,4 @@
-declare module 'express-object-router/symbols' {
+declare module 'node-susanin/symbols' {
   interface Symbols {
     UNKNOWN_ERROR: symbol;
   }

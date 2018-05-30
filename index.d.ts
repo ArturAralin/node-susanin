@@ -1,4 +1,4 @@
-declare module 'express-object-router' {
+declare module 'node-susanin' {
   import {
     Router,
     Request,

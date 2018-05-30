@@ -1,4 +1,4 @@
-declare module 'express-object-router/methods' {
+declare module 'node-susanin/methods' {
   interface Methods {
     GET: symbol;
     PUT: symbol;
