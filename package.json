@@ -1,6 +1,6 @@
 {
-  "name": "express-object-router",
-  "version": "1.2.0",
+  "name": "node-susanin",
+  "version": "1.4.0",
   "description": "This library facilitate describing endpoints for REST API servers. The main feature of this library is determining method, path, controller, middlewares, and validation of query object, url object and body object with one object.",
   "scripts": {
     "lint": "eslint lib/**/*.js test/**/*.js examples/**/*.js index.js methods.js symbols.js",
@@ -9,7 +9,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/ArturAralin/express-object-router.git"
+    "url": "git+https://github.com/ArturAralin/node-susanin.git"
   },
   "keywords": [
     "express",
@@ -22,28 +22,28 @@
   "author": "Artur A.",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/ArturAralin/express-object-router/issues"
+    "url": "https://github.com/ArturAralin/node-susanin/issues"
   },
-  "homepage": "https://github.com/ArturAralin/express-object-router#readme",
+  "homepage": "https://github.com/ArturAralin/node-susanin#readme",
   "devDependencies": {
     "api-doc": "^4.0.0",
     "apidoc": "^0.17.6",
     "chai": "^4.1.2",
     "chai-as-promised": "^7.1.1",
-    "eslint": "^4.10.0",
+    "eslint": "^4.19.1",
     "eslint-config-airbnb-base": "^12.1.0",
-    "eslint-plugin-import": "^2.8.0",
-    "express": "4.x",
-    "mocha": "^4.0.1",
-    "supertest": "^3.0.0"
+    "eslint-plugin-import": "^2.12.0",
+    "express": "^4.16.3",
+    "mocha": "^4.1.0",
+    "supertest": "^3.1.0"
   },
   "dependencies": {
+    "commander": "^2.15.1",
     "express-promise-router": "^2.0.0",
     "glob": "^7.1.2",
-    "joi": "^13.0.1",
+    "joi": "^13.3.0",
     "ramda": "^0.25.0",
-    "readline-sync": "^1.4.9",
-    "commander": "^2.15.1"
+    "readline-sync": "^1.4.9"
   },
   "engines": {
     "node": ">= 6.11.5"

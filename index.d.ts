@@ -1,4 +1,4 @@
-declare module 'express-object-router' {
+declare module 'node-susanin' {
   import {
     Router,
     Request,
@@ -72,6 +72,8 @@ declare module 'express-object-router' {
     body: AnyProps;
     query: AnyProps;
     [key: string]: any;
+    errorP(err: any): any;
+    errorP(err: any, promise: Promise<any>): Promise<any>;
   }
 
   interface RouteDescription {
