@@ -1,7 +1,9 @@
 const supertest = require('supertest');
 const express = require('express');
 const { createRouter } = require('../index');
-const { prop } = require('ramda');
+const {
+  prop,
+} = require('ramda');
 const chai = require('chai');
 
 const { expect } = chai;
@@ -16,8 +18,8 @@ const initServer = (config) => {
   return supertest(app);
 };
 
-describe('Test router', () => {
-  describe('With default configuration', () => {
+describe('node-susanin tests', () => {
+  describe('default configuration', () => {
     const api = initServer({
       routesPaths: ['./routes/*.js'],
       pathsRelateTo: __dirname,
@@ -38,7 +40,9 @@ describe('Test router', () => {
     const api = initServer({
       routesPaths: ['./routes/*.js'],
       pathsRelateTo: __dirname,
-      onReply: data => ({ customProp: data }),
+      onReply: (res, data) => {
+        res.status(200).json({ customProp: data });
+      },
     });
 
     it('GET request', async () => {
