@@ -1,6 +1,7 @@
 const {
   getMin,
   getMax,
+  isNumber,
 } = require('../tools');
 
 const allowedValuePart = (type, allowedValues) => {
@@ -27,9 +28,11 @@ const sizes = (type, rules) => {
     return '';
   }
 
+  const notSetMin = (type === 'number') ? '-Infinite' : '0';
+
   return [
     '{',
-    min || (type === 'number' ? '-Infinite' : '0'),
+    isNumber(min) ? min : notSetMin,
     type === 'string' ? '..' : '-',
     max || 'Infinite',
     '}',
@@ -41,4 +44,3 @@ module.exports = ({
   allowedValues,
   rules,
 }) => `{${type}${sizes(type, rules)}${allowedValuePart(type, allowedValues)}}`;
-
