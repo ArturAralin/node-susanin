@@ -1,16 +1,8 @@
 const {
   getMin,
   getMax,
+  isNumber,
 } = require('../tools');
-const {
-  prop,
-  cond,
-  propEq,
-  pipe,
-  when,
-  complement,
-  isNil,
-} = require('ramda');
 
 const allowedValuePart = (type, allowedValues) => {
   if (!allowedValues) {
@@ -27,22 +19,6 @@ const allowedValuePart = (type, allowedValues) => {
   return `=${items}`;
 };
 
-const typeEquals = propEq('type');
-const getVal = prop('value');
-const handleValue = when(
-  complement(isNil),
-  cond([
-    [
-      typeEquals('value'),
-      getVal,
-    ],
-    [
-      typeEquals('reference'),
-      pipe(getVal, v => `field "${v}"`),
-    ],
-  ]),
-);
-
 const sizes = (type, rules) => {
   const min = getMin(rules);
   const max = getMax(rules);
@@ -52,10 +28,13 @@ const sizes = (type, rules) => {
     return '';
   }
 
+  const notSetMin = (type === 'number') ? '-Infinite' : '0';
+
   return [
     '{',
-    min && `GTE ${handleValue(min)}; `,
-    max && `LTE ${handleValue(max)}`,
+    isNumber(min) ? min : notSetMin,
+    type === 'string' ? '..' : '-',
+    max || 'Infinite',
     '}',
   ].join('');
 };
@@ -65,4 +44,3 @@ module.exports = ({
   allowedValues,
   rules,
 }) => `{${type}${sizes(type, rules)}${allowedValuePart(type, allowedValues)}}`;
-

@@ -32,8 +32,8 @@ const {
 const APIDOC_CONFIG_NAME = 'apidoc.json';
 const DOCUMENTATION_NAME = 'apidoc-documentation.txt';
 
+const clearAndFlattenArrays = pipe(filter(Boolean), flatten);
 const isNotNil = compose(not, isNil);
-const clearAndFlattenArrays = pipe(flatten, filter(Boolean));
 const composePoints = when(
   anyPass([isNotNil, isEmpty]),
   pipe(
@@ -81,7 +81,7 @@ const multipleDescription = (description, points) =>
 
 const api = (method, path, name) => `@api {${method.toUpperCase()}} ${path} ${name || path}`;
 const apiVersion = v => `@apiVersion ${v || '0.0.0'}`;
-const apiName = (name, method, path) => `@apiName ${name || `[${method}]${path}`}`;
+const apiName = (name, path) => `@apiName ${name || path}`;
 const apiGroup = name => `@apiGroup ${name || 'NO GROUP'}`;
 const apiDescription = text => `@apiDescription ${descriptionMsg(text)}`;
 
@@ -238,16 +238,20 @@ module.exports = (absoluteOutputPath, ast) => {
         params,
         body,
       },
-    }) => block(clearAndFlattenArrays([
-      api(method, path, name),
-      apiName(name, method, path),
-      apiVersion(version),
-      apiDescription(description),
-      apiGroup(group),
-      params && apiParam('uriParams', 'params', params),
-      query && apiParam('getParams', 'query', query),
-      body && apiParam('bodyParams', 'body', body),
-    ])))
+    }) => {
+      const parts = flatten([
+        api(method, path, name),
+        apiName(name, path),
+        apiVersion(version),
+        apiDescription(description),
+        apiGroup(group),
+        params && apiParam('uriParams', 'params', params),
+        query && apiParam('getParams', 'query', query),
+        body && apiParam('bodyParams', 'body', body),
+      ].filter(Boolean));
+
+      return block(parts);
+    })
     .join('');
 
   const docsText = [
