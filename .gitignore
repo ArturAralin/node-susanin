@@ -60,3 +60,4 @@ typings/
 .vscode/
 
 docs
+/cli-test-routes
