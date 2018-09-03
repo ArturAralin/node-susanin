@@ -1,9 +1,11 @@
 const {
   concat,
+  propEq,
 } = require('ramda');
 const path = require('path');
 const getModel = require('./routes-ast');
 const docsGenerators = require('./generators');
+const apidocParser = require('./apidoc-parser');
 const {
   printText,
 } = require('./generators/tools');
@@ -19,6 +21,26 @@ const descriptionText = `Params specification:
   Supported docs format:
     apidoc - Simple inline docs for RESTful api
 `;
+
+const mergeRouteInfo = (route, routeInfo) => ({
+  ...route,
+  name: route.name || routeInfo.name,
+  description: route.description || routeInfo.description,
+  version: route.version || routeInfo.version,
+  group: route.group || routeInfo.group,
+});
+
+const relateRoutesInfo = (routesInfo, ast) =>
+  ast.map((item) => {
+    const { method, path: routePath } = item;
+    const routeInfo = routesInfo.find(propEq('id', `${method}${routePath}`.toLowerCase()));
+
+    if (!routeInfo) {
+      return item;
+    }
+
+    return mergeRouteInfo(item, routeInfo);
+  });
 
 module.exports = (cli) => {
   cli
@@ -42,10 +64,14 @@ module.exports = (cli) => {
           .join('\n'));
       }
 
-      const ast = absoluteRoutesPaths
+      const routesInfo = absoluteRoutesPaths
+        .map(apidocParser)
+        .reduce(concat, []);
+
+      const ast = relateRoutesInfo(routesInfo, absoluteRoutesPaths
         .map(require)
         .map(getModel)
-        .reduce(concat, []);
+        .reduce(concat, []));
 
       docsGenerators[docsFormat](absoluteOutputPath, ast);
     });
