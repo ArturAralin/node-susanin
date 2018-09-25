@@ -12,7 +12,7 @@ const objectParser = (parsers, validation) => {
       key,
       merge(
         commonParser(schema),
-        parsers[schema._type](schema)
+        parsers[schema._type](schema),
       ),
     ]);
 

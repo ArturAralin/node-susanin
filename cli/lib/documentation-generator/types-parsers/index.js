@@ -5,6 +5,7 @@ const date = require('./date');
 const number = require('./number');
 const object = require('./object');
 const string = require('./string');
+const alternatives = require('./alternatives');
 
 const parsers = {};
 
@@ -16,4 +17,5 @@ module.exports = Object.assign(parsers, {
   number,
   object: object.bind(null, parsers),
   string,
+  alternatives,
 });
