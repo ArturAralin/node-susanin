@@ -1,32 +1,25 @@
-const {
-  GET,
-  POST,
-  PUT,
-  DELETE,
-  HEAD,
-  OPTIONS,
-  TRACE,
-  PATCH,
-} = require('../../../methods');
 const joi = require('joi');
 const parsers = require('./types-parsers');
 const {
   merge,
   mergeAll,
+  pipe,
+  match,
+  slice,
+  toLower,
+  toString,
+  head,
 } = require('ramda');
 
 const { common: commonParser } = parsers;
 
-const METHODS_NAMES = {
-  [GET]: 'get',
-  [POST]: 'post',
-  [PUT]: 'put',
-  [DELETE]: 'delete',
-  [HEAD]: 'head',
-  [OPTIONS]: 'options',
-  [TRACE]: 'trace',
-  [PATCH]: 'patch',
-};
+const getMethodName = pipe(
+  toString,
+  match(/\(.*\)$/g),
+  head,
+  slice(1, -1),
+  toLower,
+);
 
 const DEFAULT_INFO = {
   name: null,
@@ -67,7 +60,7 @@ const parseRoute = ({
     DEFAULT_INFO,
     info,
     {
-      method: METHODS_NAMES[method],
+      method: getMethodName(method),
       path,
       validation: {
         query: (query && parseValidation(query)) || null,
