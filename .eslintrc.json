@@ -5,6 +5,12 @@
         "mocha": true
     },
     "rules": {
-        "no-underscore-dangle": ["warn", { "allow": [] }]
+        "no-underscore-dangle": ["warn", { "allow": [] }],
+        "max-len": [
+            "error",
+            {
+                "code": 200
+            }
+        ]
     }
 }
