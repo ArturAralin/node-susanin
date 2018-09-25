@@ -31,16 +31,20 @@ const getImports = pipe(
   reduce(concat, []),
 );
 
-const createMockObject = (mocks, imports) => mocks
-  .map((mock) => {
-    const importName = imports.find(importPath => mock.importMask.test(importPath)) || '';
+const createMockObject = (mocks, imports) => imports
+  .map((importName) => {
+    const mock = mocks.find(({ importMask }) => importMask.test(importName));
+
+    if (!mock) {
+      return null;
+    }
 
     return {
       ...mock,
       importName,
     };
   })
-  .filter(({ importName, importMask }) => importMask.test(importName))
+  .filter(Boolean)
   .reduce((acc, { importName, mock }) => ({
     ...acc,
     [importName]: mock,
