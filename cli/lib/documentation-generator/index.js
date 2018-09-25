@@ -9,9 +9,13 @@ const apidocParser = require('./apidoc-parser');
 const {
   printText,
 } = require('./generators/tools');
+const {
+  requireWithMocking,
+  loadMocksFile,
+} = require('./mock-tools');
 
 const CWD = process.cwd();
-const DEFAULT_OUTPUT_FOLDER = path.resolve(CWD, './documentation');
+const DEFAULT_OUTPUT_FOLDER = path.resolve(CWD, './');
 
 const descriptionText = `Params specification:
 
@@ -42,15 +46,25 @@ const relateRoutesInfo = (routesInfo, ast) =>
     return mergeRouteInfo(item, routeInfo);
   });
 
+
 module.exports = (cli) => {
   cli
     .command('build-docs <docs-format> [routes...]')
     .description(descriptionText)
     .option('-O, --outputPath <outputPath>', 'path to output docs files', DEFAULT_OUTPUT_FOLDER)
+    .option('--mockFile <mockFilePath>')
+    .option('--autoUpdateVersion', 'Auto update version')
     .option('--verbose', 'verbose mode')
-    .action((docsFormat, routes, { outputPath, verbose }) => {
+    .action((docsFormat, routes, {
+      outputPath,
+      verbose,
+      autoUpdateVersion,
+      mockFile: mockFilePath = '',
+    }) => {
       const absoluteOutputPath = path.resolve(CWD, outputPath);
       const absoluteRoutesPaths = routes.map(relativePath => path.resolve(CWD, relativePath));
+      const absoluteMockFilePath = path.resolve(CWD, mockFilePath);
+      const mocks = loadMocksFile(absoluteMockFilePath) || [];
 
       if (absoluteRoutesPaths.length === 0) {
         printText('No router files found');
@@ -69,11 +83,15 @@ module.exports = (cli) => {
         .reduce(concat, []);
 
       const ast = relateRoutesInfo(routesInfo, absoluteRoutesPaths
-        .map(require)
+        .map(requireWithMocking(mocks))
         .map(getModel)
         .reduce(concat, []));
 
-      docsGenerators[docsFormat](absoluteOutputPath, ast);
+      docsGenerators[docsFormat]({
+        absoluteOutputPath,
+        ast,
+        autoUpdateVersion,
+      });
     });
 };
 

@@ -205,17 +205,31 @@ const readConfigFile = pipe(
   JSON.parse,
 );
 
-module.exports = (absoluteOutputPath, ast) => {
-  const absoluteConfigPath = pathResolve(absoluteOutputPath, APIDOC_CONFIG_NAME);
-  const isConfigExists = fs.existsSync(absoluteConfigPath);
+const increaseVersion = (version) => {
+  const [major, minor, ver] = version.split('.');
+  const newVer = parseInt(ver, 10) + 1;
 
-  printText('ApiDoc docs generator');
+  return `${major}.${minor}.${newVer}`;
+};
 
+const updateApidocJsonDialog = (absoluteConfigPath, isConfigExists, autoUpdateVersion) => {
   const {
     name: currentProjectName,
     description: currentProjectDescription,
     version: currentProjectVersion,
   } = (isConfigExists && readConfigFile(absoluteConfigPath)) || {};
+
+  if (!isConfigExists && autoUpdateVersion) {
+    throw Error('Can not auto update version without apidoc.json');
+  }
+
+  if (autoUpdateVersion) {
+    const newVersion = increaseVersion(currentProjectVersion);
+    printText(`Version auto updated ${newVersion}`);
+
+    return buildJsonConfiguration(currentProjectName, currentProjectDescription, newVersion);
+  }
+
   const projectName = !isConfigExists
     ? rl.question('Project name (default: ""): ') || ''
     : currentProjectName;
@@ -223,7 +237,20 @@ module.exports = (absoluteOutputPath, ast) => {
     ? rl.question('Project description (default: ""): ') || ''
     : currentProjectDescription;
   const projectVersion = rl.question(`Project version (${isConfigExists ? `current: ${currentProjectVersion}` : 'default: 1.0.0'}): `) || currentProjectVersion || '1.0.0';
-  const configurationData = buildJsonConfiguration(projectName, projectDescription, projectVersion);
+
+  return buildJsonConfiguration(projectName, projectDescription, projectVersion);
+};
+
+module.exports = ({
+  absoluteOutputPath,
+  ast,
+  autoUpdateVersion,
+}) => {
+  const absoluteConfigPath = pathResolve(absoluteOutputPath, APIDOC_CONFIG_NAME);
+  const isConfigExists = fs.existsSync(absoluteConfigPath);
+
+  printText('ApiDoc docs generator');
+  const configurationData = updateApidocJsonDialog(absoluteConfigPath, isConfigExists, autoUpdateVersion);
 
   const routes = ast
     .map(({
