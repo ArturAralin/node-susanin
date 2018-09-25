@@ -158,9 +158,10 @@ arrayParams = (group, parentName, validation) => {
 
 objectParams = (group, parentName, validation) => {
   const {
-    keysRules,
+    keysRules: validationKeysRules,
     skipValidation,
   } = validation;
+  const keysRules = validationKeysRules || [];
 
   return clearAndFlattenArrays([
     !skipValidation && primitiveParam(group, parentName, validation),
