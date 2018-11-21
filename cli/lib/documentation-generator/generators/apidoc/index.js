@@ -31,6 +31,9 @@ const {
 
 const APIDOC_CONFIG_NAME = 'apidoc.json';
 const DOCUMENTATION_NAME = 'apidoc-documentation.txt';
+const VALID_PARAM_NAME_SYMBOLS = /[a-z.0-9]+/gi;
+
+const { warn } = console;
 
 const clearAndFlattenArrays = pipe(filter(Boolean), flatten);
 const isNotNil = compose(not, isNil);
@@ -85,6 +88,23 @@ const apiName = (name, path) => `@apiName ${name || path}`;
 const apiGroup = name => `@apiGroup ${name || 'NO GROUP'}`;
 const apiDescription = text => `@apiDescription ${descriptionMsg(text)}`;
 
+const apiParamName = (required, defaultValue, name) => {
+  const nameParts = name.match(VALID_PARAM_NAME_SYMBOLS);
+  const isHaveInvalidSymbols = nameParts.length > 1;
+  const validName = nameParts.join('');
+  const defaultValuePart = defaultValue ? `=${defaultValue}` : '';
+
+  if (isHaveInvalidSymbols) {
+    warn(`api param "${name}" have invalid symbol. Allowed symbols [a-z.0-9]`);
+  }
+
+  return [
+    !required && '[',
+    `${validName}${defaultValuePart}`,
+    !required && ']',
+  ].filter(Boolean).join('');
+};
+
 const primitiveParam = (group, name, {
   description,
   defaultValue,
@@ -94,12 +114,7 @@ const primitiveParam = (group, name, {
   type,
   required,
 }) => {
-  const defaultValuePart = defaultValue ? `=${defaultValue}` : '';
-  const namePart = [
-    !required && '[',
-    `${name}${defaultValuePart}`,
-    !required && ']',
-  ].filter(Boolean).join('');
+  const namePart = apiParamName(required, defaultValue, name);
   const typePart = types({
     type,
     allowedValues,
