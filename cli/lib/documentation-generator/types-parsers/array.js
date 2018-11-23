@@ -1,6 +1,13 @@
 const { testsParser } = require('./tests-parser');
 const commonParser = require('./common');
-const { merge } = require('ramda');
+const {
+  merge,
+  type: ramdaType,
+  pipe,
+  equals,
+} = require('ramda');
+
+const isArray = pipe(ramdaType, equals('Array'));
 
 const arrayParser = (parsers, validation) => {
   const type = validation._type;
@@ -10,11 +17,14 @@ const arrayParser = (parsers, validation) => {
       commonParser(item),
       parsers[item._type](item),
     ));
+  const arrayDefaultValue = (validation._flags && validation._flags.default) || undefined;
+  const defaultValue = isArray(arrayDefaultValue) ? '[]' : arrayDefaultValue;
 
   return {
     type,
     rules,
     itemsRules,
+    defaultValue,
   };
 };
 

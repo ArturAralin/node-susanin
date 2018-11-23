@@ -1,14 +1,15 @@
+/* eslint-disable no-underscore-dangle */
 module.exports = (validation, skipValidation) => {
   // Description
   const description = validation._description || null;
-  const defaultValue = validation._flags && validation._flags.default || null;
+  const defaultValue = (validation._flags && validation._flags.default) || undefined;
 
   // Allowed values
-  const allowedValuesList = validation._valids && validation._valids.values() || [];
+  const allowedValuesList = (validation._valids && validation._valids.values()) || [];
   const allowedValues = allowedValuesList.length > 0 ? allowedValuesList : null;
 
   // Disallowed values
-  const disallowedValuesList = validation._invalids && validation._invalids.values().slice(2) || [];
+  const disallowedValuesList = (validation._invalids && validation._invalids.values().slice(2)) || [];
   const disallowedValues = disallowedValuesList.length > 0 ? disallowedValuesList : null;
 
   // Notes

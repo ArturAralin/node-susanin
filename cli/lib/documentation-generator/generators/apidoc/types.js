@@ -4,6 +4,7 @@ const {
   isNumber,
 } = require('../tools');
 
+
 const allowedValuePart = (type, allowedValues) => {
   if (!allowedValues) {
     return '';
@@ -13,7 +14,7 @@ const allowedValuePart = (type, allowedValues) => {
     .map(value =>
       (type === 'string'
         ? `"${value}"`
-        : value))
+        : String(value)))
     .join(',');
 
   return `=${items}`;
