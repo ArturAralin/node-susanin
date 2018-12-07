@@ -38,11 +38,11 @@ const id = pipe(
   split(' '),
   dropFirst,
   adjust(
+    0,
     pipe(
       match(/\w+/g),
       head,
     ),
-    0,
   ),
   apply(concat),
   toLower,
