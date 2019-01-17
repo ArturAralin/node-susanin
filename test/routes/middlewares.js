@@ -19,6 +19,12 @@ const setToPropsMiddleware = ({
   pass();
 };
 
+const justPass = ({
+  pass,
+}) => {
+  pass();
+};
+
 const setToPropsCtrl = ({
   reply,
   props,
@@ -39,7 +45,7 @@ module.exports = [
     method: GET,
     path: '/middlewares/params/set-to-props',
     controller: setToPropsCtrl,
-    middlewares: [setToPropsMiddleware],
+    middlewares: [setToPropsMiddleware, justPass],
     validation: {},
     middlewaresProps: {
       middlewaresPropsSymbol,
