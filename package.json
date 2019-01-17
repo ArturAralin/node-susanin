@@ -1,6 +1,6 @@
 {
   "name": "node-susanin",
-  "version": "1.4.13",
+  "version": "1.5.0",
   "description": "This library facilitate describing endpoints for REST API servers. The main feature of this library is determining method, path, controller, middlewares, and validation of query object, url object and body object with one object.",
   "scripts": {
     "lint": "eslint lib/**/*.js test/**/*.js examples/**/*.js index.js methods.js symbols.js",
@@ -26,22 +26,22 @@
   },
   "homepage": "https://github.com/ArturAralin/node-susanin#readme",
   "devDependencies": {
-    "api-doc": "^4.0.0",
-    "apidoc": "^0.17.6",
-    "chai": "^4.1.2",
+    "api-doc": "^4.0.3",
+    "apidoc": "^0.17.7",
+    "chai": "^4.2.0",
     "chai-as-promised": "^7.1.1",
     "eslint": "^4.19.1",
     "eslint-config-airbnb-base": "^12.1.0",
     "eslint-plugin-import": "^2.14.0",
-    "express": "^4.16.3",
+    "express": "^4.16.4",
     "mocha": "^4.1.0",
-    "supertest": "^3.1.0"
+    "supertest": "^3.4.1"
   },
   "dependencies": {
-    "commander": "^2.17.1",
+    "commander": "^2.19.0",
     "express-promise-router": "^2.0.0",
     "glob": "^7.1.3",
-    "joi": "^13.6.0",
+    "joi": "^13.7.0",
     "proxyquire": "^2.1.0",
     "ramda": "^0.26.1",
     "readline-sync": "^1.4.9"
