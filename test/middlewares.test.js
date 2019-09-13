@@ -37,4 +37,39 @@ describe('Middlewares', () => {
         .that.to.equal(true);
     });
   });
+
+  describe('custom middleware sequence', () => {
+    const api = initServer({
+      routesPaths: ['./routes/*.js'],
+      pathsRelateTo: __dirname,
+      middlewaresSequence: ({
+        PARAMS_VALIDATION,
+        QUERY_VALIDATION,
+        BODY_VALIDATION,
+        ROUTER_MIDDLEWARES,
+      }) => [
+        PARAMS_VALIDATION,
+        QUERY_VALIDATION,
+        BODY_VALIDATION,
+        ROUTER_MIDDLEWARES,
+        ({
+          pass,
+          setToProps,
+        }) => {
+          setToProps('test', 'it_works');
+          pass();
+        },
+      ],
+    });
+
+    it('should have property "data.test" equals to "it_works"', async () => {
+      const result = await api
+        .get('/middlewares/just-pass')
+        .then(getBody);
+
+      expect(result.data)
+        .to.have.property('test')
+        .that.equals('it_works');
+    });
+  });
 });

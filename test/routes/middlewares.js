@@ -51,4 +51,10 @@ module.exports = [
       middlewaresPropsSymbol,
     },
   },
+  {
+    method: GET,
+    path: '/middlewares/just-pass',
+    controller: ({ reply, props }) => { reply(props); },
+    validation: {},
+  },
 ];
