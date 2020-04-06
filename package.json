@@ -1,6 +1,6 @@
 {
   "name": "node-susanin",
-  "version": "1.5.3",
+  "version": "1.5.4",
   "description": "This library facilitate describing endpoints for REST API servers. The main feature of this library is determining method, path, controller, middlewares, and validation of query object, url object and body object with one object.",
   "scripts": {
     "lint": "eslint lib/**/*.js test/**/*.js examples/**/*.js index.js methods.js symbols.js",
