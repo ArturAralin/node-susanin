@@ -74,7 +74,7 @@ module.exports = (cli) => {
 
       if (verbose) {
         printText(absoluteRoutesPaths
-          .map(line => `(finded file) ${line}`)
+          .map(line => `(found file) ${line}`)
           .join('\n'));
       }
 
