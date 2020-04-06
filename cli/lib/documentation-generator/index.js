@@ -59,12 +59,14 @@ module.exports = (cli) => {
       outputPath,
       verbose,
       autoUpdateVersion,
-      mockFile: mockFilePath = '',
+      mockFile: mockFilePath = null,
     }) => {
       const absoluteOutputPath = path.resolve(CWD, outputPath);
       const absoluteRoutesPaths = routes.map(relativePath => path.resolve(CWD, relativePath));
-      const absoluteMockFilePath = path.resolve(CWD, mockFilePath);
-      const mocks = loadMocksFile(absoluteMockFilePath) || [];
+      const mocks = mockFilePath !== null
+        ? loadMocksFile(path.resolve(CWD, mockFilePath))
+        : [];
+
 
       if (absoluteRoutesPaths.length === 0) {
         printText('No router files found');

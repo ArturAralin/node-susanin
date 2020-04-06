@@ -9,7 +9,7 @@ const {
   ap,
   concat,
   reduce,
-  curry,
+  curryN,
 } = require('ramda');
 
 const matchRequire = pipe(
@@ -50,7 +50,7 @@ const createMockObject = (mocks, imports) => imports
     [importName]: mock,
   }), {});
 
-const requireWithMocking = curry((mocks, absoluteFileName) => {
+const requireWithMocking = curryN(2, (mocks, absoluteFileName) => {
   const text = fs.readFileSync(absoluteFileName).toString();
   const imports = getImports(text);
   const mockObject = createMockObject(mocks, imports);
